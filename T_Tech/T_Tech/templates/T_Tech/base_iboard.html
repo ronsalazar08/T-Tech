@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'T_Tech/styleIboard.css' %}">
+    </head>
+    <body class="bg">
+        <center>
+            <div id="block_containerLogo" class="m-0 pt-2 pb-0"> 
+                <div id="bloc1Logo" class="align-top m-0">
+                    <img src="{{STATIC_URL}}/media/ttech_logo.png" alt="olo" width="30" height="30"/>
+                </div>
+                <div id="bloc2Logo" class="align-center">
+                    <b><font size="4" >TORRES TECHNOLOGY CENTER CORPORATION</font></b>
+                </div>
+            </div>
+        </center>
+        
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <!--<script src="{% static 'office/main.js' %}"></script>-->
+
+        {% if messages %}
+            {% for message in messages %}
+                <div id="alertdiv" class="w-25 p-2 alert alert-{{ message.tags }}" style="text-align: center; font-weight: bold; height: 40px; position: absolute; top: 78px; right: 509px; z-index: 10;">
+                    {{message}}
+                </div>
+                <script>
+                    $(document).ready(function(){
+                        $("#alertdiv").fadeOut(5000);
+                    });
+                </script>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        
+        {% endblock %}
+        
+    </body>
+</html>

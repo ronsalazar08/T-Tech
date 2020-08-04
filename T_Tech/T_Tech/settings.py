@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'fabrication',
     'rbf',
     'hr',
+    'iboard',
 ]
 
 MIDDLEWARE = [
