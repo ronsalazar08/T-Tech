@@ -29,6 +29,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'T_Tech',
     'office',
+    'creform',
+    'fabrication',
+    'rbf',
+    'hr',
 ]
 
 MIDDLEWARE = [

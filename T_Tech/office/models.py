@@ -21,6 +21,9 @@ class employee(models.Model):
     picture = models.ImageField(default="no-avatar.png", upload_to="pic_files")
     status = models.CharField(max_length=5 , blank=True, null=True, choices=status_choice)
 
+    class Meta:
+        verbose_name_plural = "EMPLOYEES"
+        
     def __str__(self):
         name = self.lastname + ", " + self.firstname + " " + self.middlename[0] + ". "
         return str(name)

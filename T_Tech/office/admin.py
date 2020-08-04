@@ -1,11 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.models import Group, User
 from .models import *
-from django.http import HttpResponse
-from django.urls import path
-
-# admin.site.unregister(User)
-# admin.site.unregister(Group)
 
 
 def set_P(modeladmin, request, queryset):
