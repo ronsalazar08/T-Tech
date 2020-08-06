@@ -3,10 +3,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.apps import apps
 from datetime import datetime
+from django.db.models import Q
 import json
 from office.models import *
 import fabrication.models
 import creform.models
+import rbf.models
 from hr.models import *
 # from crimping_dies.models import *
 
@@ -44,7 +46,7 @@ def Display(request, rfid):
     try:
         emp = employee.objects.get(rfid=rfid)
         urlb = emp.picture.url
-        if emp.status == '':
+        if emp.status == None:
             try:
                 urla = emp.name_sound.url
             except:
@@ -56,16 +58,16 @@ def Display(request, rfid):
                 # employee.objects.filter(rfid=rfid).update(status='P') # update status of employee
                 emp.status = 'P'
                 emp.save()
-            '''
-            if datetime.now().time() < sevenam.time():
-                # employee.objects.filter(rfid=rfid).update(status='P') # update status of employee
-                emp.status = 'P'
-                emp.save()
-            elif datetime.now().time() > sevenam.time():
-                # employee.objects.filter(rfid=rfid).update(status='L') # update status of employee
-                emp.status = 'L'
-                emp.save()
-            '''
+            
+            # if datetime.now().time() < sevenam.time():
+            #     # employee.objects.filter(rfid=rfid).update(status='P') # update status of employee
+            #     emp.status = 'P'
+            #     emp.save()
+            # elif datetime.now().time() > sevenam.time():
+            #     # employee.objects.filter(rfid=rfid).update(status='L') # update status of employee
+            #     emp.status = 'L'
+            #     emp.save()
+            
         else:
             urla = ""
 
@@ -87,15 +89,16 @@ def Reload(request):
     if request.method == "POST":
         olo = pagestat.objects.get(id=1)
         oras = datetime.now().strftime("%H:%M:%S")
-        emp = employee.objects.exclude(status='')
+        emp = employee.objects.exclude(status=None)
         if oras > "16:00:00" and oras < "16:30:00" and emp.count() > 0:
             mon = datetime.now().strftime("%B").lower()
-            model = apps.get_model('month', mon)
+            model = apps.get_model('office', mon)
             field_name = 'd' + str(datetime.now().day)
             field_name_icontains = field_name + '__icontains'
             s = 'A'
             model.objects.filter(**{field_name: ''}).update(**{field_name: s})
-            employee.objects.all().update(status='')
+            model.objects.filter(**{field_name: None}).update(**{field_name: s})
+            employee.objects.all().update(status=None)
             olo.stat = 'True'
         if olo.stat == 'True':
             olo.stat = 'False'
@@ -124,19 +127,24 @@ def Bday(request):
     return render(request, 'iboard/bday.html', context)
 
 
-# def sales_graph(request):
-#     fabrication_sales = fabrication.models.sale.objects.all()
-#     fabrication_rfpgs = fabrication.models.rfpg.objects.all()
+def sales_graph(request):
+    fabrication_sales = fabrication.models.sale.objects.all()
+    fabrication_rfpgs = fabrication.models.rfpg.objects.all()
 
-#     creform_sales = creform.models.sale.objects.all()
-#     creform_rfpgs = creform.models.rfpg.objects.all()
-#     context = {
-#         'fabrication_sales': fabrication_sales,
-#         'fabrication_rfpgs': fabrication_rfpgs,
-#         'creform_sales': creform_sales,
-#         'creform_rfpgs': creform_rfpgs,
-#     }
-#     return render(request, 'iboard/sales_graph.html', context)
+    creform_sales = creform.models.sale.objects.all()
+    creform_rfpgs = creform.models.rfpg.objects.all()
+
+    rbf_sales = rbf.models.sale.objects.all()
+    rbf_rfpgs = rbf.models.rfpg.objects.all()
+    context = {
+        'fabrication_sales': fabrication_sales,
+        'fabrication_rfpgs': fabrication_rfpgs,
+        'creform_sales': creform_sales,
+        'creform_rfpgs': creform_rfpgs,
+        'rbf_sales': rbf_sales,
+        'rbf_rfpgs': rbf_rfpgs,
+    }
+    return render(request, 'iboard/sales_graph.html', context)
 
 
 # def dies_status(request):
@@ -164,15 +172,15 @@ def Bday(request):
 #     return render(request, 'iboard/dies_status.html', context)
 
 
-# def hr_manpower(request):
-#     ttech = TTECH.objects.all()
-#     thc = THC.objects.all()
-#     ytmi = YTMI.objects.all()
-#     date_modified = AS_OF.objects.first()
-#     context = {
-#         'ttechs': ttech,
-#         'thcs': thc,
-#         'ytmis': ytmi,
-#         'asofs': date_modified,
-#     }
-#     return render(request, 'iboard/hr_manpower.html', context)
+def hr_manpower(request):
+    ttech = TTECH.objects.all()
+    thc = THC.objects.all()
+    ytmi = YTMI.objects.all()
+    date_modified = AS_OF.objects.first()
+    context = {
+        'ttechs': ttech,
+        'thcs': thc,
+        'ytmis': ytmi,
+        'asofs': date_modified,
+    }
+    return render(request, 'iboard/hr_manpower.html', context)

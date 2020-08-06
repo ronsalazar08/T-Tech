@@ -1,0 +1,316 @@
+{% extends "T_Tech/base_dark.html" %}
+{% block content %}
+<center>
+    <div id="bloc2Logo" class="align-top">
+        <b><font size="5" style="color:white;" >MANPOWER STATUS <font style="font-size: 14px;" class="text-danger">as of {{asofs.date_modified}}</font></font></b>
+    </div>
+</center>
+<div class="" style="height: 97%">
+    <div class="h-50 row">
+        <div class="h-100 col-7 pr-2">
+            <div class="row pl-4 ">
+                <b><font size="5" class="text-white" >TTECH</font></b>
+            </div>
+            <div class="ml-2" style="overflow: hidden; border-radius:10px;">
+                <table id="ttechtable" class="mx-auto text-white text-center table" style="font-size: 25px; line-height:1.3">
+                    <thead class="bg-success p-0">
+                        <tr>
+                            <th rowspan=2 style="vertical-align: middle;">DEPT / AREA</th>
+                            <th colspan=3 class="p-1">EMPLOYMENT STATUS</th>
+                            <th colspan=2 class="p-1" style="border-left: solid 2px white;">GENDER</th>
+                        </tr>
+                        <tr>
+                            <th class="p-1">PROB</th>
+                            <th class="p-1">REG</th>
+                            <th class="p-1">TOTAL</th>
+                            <th class="p-1" style="border-left: solid 2px white;">MALE</th>
+                            <th class="p-1">FEMALE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for ttech in ttechs %}
+                        <tr>
+                            <td class="text-left pt-0 pb-0">{{ttech.name}}</td>
+                            <td class="prob pt-0 pb-0">{{ttech.probationary}}</td>
+                            <td class="reg pt-0 pb-0">{{ttech.regular}}</td>
+                            <td class="tot text-success font-weight-bold pt-0 pb-0">{{ttech.probationary|add:ttech.regular}}</td>
+                            <td class="mal pt-0 pb-0">{{ttech.male}}</td>
+                            <td class="fem pt-0 pb-0">{{ttech.female}}</td>
+                        </tr>
+                        {% if forloop.last %}
+                            <tr class="bg-white text-dark">
+                                <td class="font-weight-bolder text-left pt-0 pb-0" style="border-bottom-left-radius:10px; vertical-align: middle;">TOTAL</td>
+                                <td class="probS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="regS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="totS text-dark bg-success font-weight-bolder pt-0 pb-0" style="vertical-align: middle; font-size: 25px;"></td>
+                                <td class="malS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="femS pt-0 pb-0" style="vertical-align: middle; border-bottom-right-radius:10px; height:30px;"></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="h-100 col-5 pl-2">
+            <div class="row pl-4 ">
+                <b><font size="5" class="text-white" >THC</font></b>
+            </div>
+            <div class="mr-2 " style="overflow: hidden; border-radius:10px;">
+                <table id="thctable" class="mx-auto text-white text-center table" style="font-size: 25px; line-height:1.3">
+                    <thead class="bg-info p-0">
+                        <tr>
+                            <th rowspan=2 style="vertical-align: middle;">DEPT / AREA</th>
+                            <th colspan=3 class="p-1">EMPLOYMENT STATUS</th>
+                            <th colspan=2 class="p-1" style="border-left: solid 2px white;">GENDER</th>
+                        </tr>
+                        <tr>
+                            <th class="p-1">PROB</th>
+                            <th class="p-1">REG</th>
+                            <th class="p-1 ">TOTAL</th>
+                            <th class="p-1" style="border-left: solid 2px white;">MALE</th>
+                            <th class="p-1">FEMALE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for thc in thcs %}
+                        <tr>
+                            <td class="text-left pt-0 pb-0">{{thc.name}}</td>
+                            <td class="prob1 pt-0 pb-0">{{thc.probationary}}</td>
+                            <td class="reg1 pt-0 pb-0">{{thc.regular}}</td>
+                            <td class="tot1 text-info font-weight-bold pt-0 pb-0">{{thc.probationary|add:thc.regular}}</td>
+                            <td class="mal1 pt-0 pb-0">{{thc.male}}</td>
+                            <td class="fem1 pt-0 pb-0">{{thc.female}}</td>
+                        </tr>
+                        {% if forloop.last %}
+                            <tr class="bg-white text-dark">
+                                <td class="font-weight-bolder text-left pt-0 pb-0" style="border-bottom-left-radius:10px; vertical-align: middle;">TOTAL</td>
+                                <td class="probS1 pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="regS1 pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="totS1 text-dark bg-info font-weight-bolder pt-0 pb-0" style="vertical-align: middle; font-size: 25px;"></td>
+                                <td class="malS1 pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="femS1 pt-0 pb-0" style="vertical-align: middle; border-bottom-right-radius:10px; height:30px;"></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="h-50 row">
+        <div class="h-100 col-8">
+            <div class="row pl-4">
+                <b><font size="5" class="text-white" >YTMI BORROWED EMPOLYEE</font></b>
+            </div>
+            <div class="ml-2 " style="overflow: hidden; border-radius:10px;">
+                <table id="ytmitable" class="mx-auto text-white text-center table" style="font-size: 23px; line-height:1.25">
+                    <thead class="bg-warning p-0">
+                        <tr>
+                            <th rowspan=2 style="vertical-align: middle;">DEPT / AREA</th>
+                            <th colspan=3 class="p-1">SHIFT A</th>
+                            <th colspan=3 class="p-1" style="border-left: solid 2px white;">SHIFT B</th>
+                            <th colspan=3 class="p-1" style="border-left: solid 2px white;">SHIFT RT</th>
+                            <th rowspan=2 class="p-1" style="border-left: solid 2px white; vertical-align: middle;">TOTAL</th>
+                        </tr>
+                        <tr>
+                            <th class="p-1">REG</th>
+                            <th class="p-1">KHMPC</th>
+                            <th class="p-1 ">TOTAL</th>
+                            <th class="p-1" style="border-left: solid 2px white;">REG</th>
+                            <th class="p-1">KHMPC</th>
+                            <th class="p-1 ">TOTAL</th>
+                            <th class="p-1" style="border-left: solid 2px white;">REG</th>
+                            <th class="p-1">KHMPC</th>
+                            <th class="p-1 ">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for ytmi in ytmis %}
+                        <tr>
+                            <td class="text-left pt-0 pb-0">{{ytmi.name}}</td>
+                            <td class="reg_a pt-0 pb-0">{{ytmi.reg_a}}</td>
+                            <td class="khmpc_a pt-0 pb-0">{{ytmi.khmpc_a}}</td>
+                            <td class="tot_a text-warning font-weight-bold pt-0 pb-0">{{ytmi.reg_a|add:ytmi.khmpc_a}}</td>
+                            <td class="reg_b pt-0 pb-0">{{ytmi.reg_b}}</td>
+                            <td class="khmpc_b pt-0 pb-0">{{ytmi.khmpc_b}}</td>
+                            <td class="tot_b text-warning font-weight-bold pt-0 pb-0">{{ytmi.reg_b|add:ytmi.khmpc_b}}</td>
+                            <td class="reg_rt pt-0 pb-0">{{ytmi.reg_rt}}</td>
+                            <td class="khmpc_rt pt-0 pb-0">{{ytmi.khmpc_rt}}</td>
+                            <td class="tot_rt text-warning font-weight-bold pt-0 pb-0">{{ytmi.reg_rt|add:ytmi.khmpc_rt}}</td>
+                            <td class="toto font-weight-bold pt-0 pb-0">{{ytmi.reg_a|add:ytmi.khmpc_a|add:ytmi.reg_b|add:ytmi.khmpc_b|add:ytmi.reg_rt|add:ytmi.khmpc_rt}}</td>
+                        </tr>
+                        {% if forloop.last %}
+                            <tr class="bg-white text-dark">
+                                <td class="font-weight-bolder text-left pt-0 pb-0" style="border-bottom-left-radius:10px; vertical-align: middle;">TOTAL</td>
+                                <td class="reg_aS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="khmpc_aS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="tot_aS text-warning font-weight-bolder pt-0 pb-0" style="vertical-align: middle; font-size: 23px;"></td>
+                                <td class="reg_bS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="khmpc_bS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="tot_bS text-warning font-weight-bolder pt-0 pb-0" style="vertical-align: middle; font-size: 23px;"></td>
+                                <td class="reg_rtS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="khmpc_rtS pt-0 pb-0" style="vertical-align: middle;"></td>
+                                <td class="tot_rtS text-warning font-weight-bolder pt-0 pb-0" style="vertical-align: middle; font-size: 23px;"></td>
+                                <td class="totoS text-dark bg-warning font-weight-bolder pt-0 pb-0" style="vertical-align: middle; font-size: 23px; border-bottom-right-radius:10px; height:30px;"></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="h-100 col-4 ">
+            <div class="row h-75">
+                <canvas id="myChart" class=" border-secondary rounded"></canvas>
+            </div>
+            <div class="row h-25">
+                <div class="col my-auto text-center ">
+                    <b><font size="8" class="text-white" >TOTAL: <span id="totaldiv"></span> </font></b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function getColTotal(x, y){
+        var val = 0;
+        
+        $(x).each(function() {
+            var value = $(this).text();
+            if(!isNaN(value) && value.length != 0) {
+                val += parseFloat(value);
+            }
+            $(y).html(val);
+        });
+    }
+    getColTotal(".prob", ".probS");   //prob
+    getColTotal(".reg", ".regS");   //reg
+    getColTotal(".tot", ".totS");   //total
+    getColTotal(".mal", ".malS");   //total
+    getColTotal(".fem", ".femS");   //total
+
+
+    getColTotal(".prob1", ".probS1");   //prob
+    getColTotal(".reg1", ".regS1");   //reg
+    getColTotal(".tot1", ".totS1");   //total
+    getColTotal(".mal1", ".malS1");   //total
+    getColTotal(".fem1", ".femS1");   //total
+
+
+    getColTotal(".reg_a", ".reg_aS");   //prob
+    getColTotal(".khmpc_a", ".khmpc_aS");   //reg
+    getColTotal(".tot_a", ".tot_aS");   //total
+    getColTotal(".reg_b", ".reg_bS");   //prob
+    getColTotal(".khmpc_b", ".khmpc_bS");   //reg
+    getColTotal(".tot_b", ".tot_bS");   //total
+    getColTotal(".reg_rt", ".reg_rtS");   //prob
+    getColTotal(".khmpc_rt", ".khmpc_rtS");   //reg
+    getColTotal(".tot_rt", ".tot_rtS");   //total
+    getColTotal(".toto", ".totoS");   //total
+    
+
+    var totSgraph = $(".totS").text();
+    var totS1graph = $(".totS1").text();
+    var totoSgraph = $(".totoS").text();
+    var tdiv = parseInt(totSgraph) + parseInt(totS1graph) + parseInt(totoSgraph);
+    $("#totaldiv").text(tdiv);
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var gradient = ctx.createLinearGradient(0,300,0,0);
+    gradient.addColorStop(0,"rgb(0, 100, 255, .5)");
+    gradient.addColorStop(1,"rgb(255, 50, 50, .5)");
+    Chart.defaults.global.defaultFontColor = 'white';
+    Chart.defaults.line.spanGaps = true;
+    Chart.defaults.global.defaultFontStyle = 'bold';
+    Chart.defaults.global.defaultFontSize = '25';
+    Chart.defaults.scale.gridLines.drawOnChartArea = false;
+
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['TTECH', 'THC', 'YTMI B.E',],
+            datasets: [{
+                label: 'SUMMARY',
+                lineTension: .2,
+                backgroundColor: gradient,
+                borderColor: gradient,
+                borderWidth: 4,
+                data: [totSgraph,totS1graph,totoSgraph],
+            }]
+        },
+        plugins: [ChartDataLabels],
+        options: {
+            title: {
+                display: true,
+                text: 'SUMMARY',
+                fontSize: 28                ,
+                
+            },
+            spanGaps: false,
+            scales: {
+                xAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    barPercentage: 0.75,
+                    //ticks:{minRotation: 30}
+                }],
+                yAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    ticks:{
+                        beginAtZero: true,
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: false
+            },
+            plugins: {
+                datalabels: {
+                    color:'white',
+                    anchor: 'end', 
+                    clamp: 'true', 
+                    align: 'top',
+                    backgroundColor:gradient,
+                    //backgroundColor: 'rgb(255,255,255, .5)',
+                    borderRadius: '5',
+                }
+            },
+            legend: {
+            display: false
+            },
+            maintainAspectRatio: false,
+        }
+    });
+
+    function addData(chart, label, data) {
+        chart.data.labels.push(label);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(data);
+        });
+        chart.update();
+    }
+
+    $(document).ready(function(){
+
+        $('table tbody tr').each(function () {
+            
+            $(this).find('td').each(function () {
+                var valu = $(this).text();
+                if (valu == '0'){
+                    $(this).html('-');
+                } 
+            });
+
+        });
+        /*
+        setTimeout(function(){
+            myChart.data.datasets[0].data[2] = 50;
+            myChart.update();
+            addData(myChart, 'olo', 50);
+        }, 20000);
+        */
+        {% comment %} setTimeout(function(){window.location.href="http://10.44.2.160:8000/acct/acciboard"}, 60000); {% endcomment %}
+        setTimeout(function(){window.location.href="{% url 'iboard_home' %}"}, 60000);
+    });
+</script>
+{% endblock content %}

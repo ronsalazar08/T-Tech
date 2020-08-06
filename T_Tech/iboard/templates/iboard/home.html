@@ -34,7 +34,7 @@
                             {% for c in count %}
                                 <th class="text-center">{{ forloop.counter }}</th>
                             {% endfor %}
-                            <th class="text-center">L</th>
+                            {% comment %} <th class="text-center">L</th> {% endcomment %}
                             <th class="text-center">A</th>
                         </tr>
                     </thead>
@@ -43,42 +43,42 @@
                             <tr>
                                 <td class="text-center font-weight-bold">{{ forloop.counter }}</td>
                                 <td class="font-weight-bold" style="font-size: 14px;">{{m.name}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d1}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d2}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d3}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d4}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d5}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d6}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d7}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d8}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d9}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d10}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d11}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d12}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d13}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d14}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d15}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d16}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d17}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d18}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d19}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d20}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d21}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d22}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d23}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d24}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d25}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d26}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d27}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d28}}</td>
-                                <td class="dd text-center" style="font-size: 11px;">{{m.d29}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d1|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d2|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d3|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d4|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d5|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d6|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d7|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d8|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d9|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d10|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d11|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d12|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d13|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d14|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d15|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d16|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d17|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d18|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d19|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d20|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d21|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d22|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d23|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d24|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d25|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d26|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d27|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d28|default_if_none:""}}</td>
+                                <td class="dd text-center" style="font-size: 11px;">{{m.d29|default_if_none:""}}</td>
                                 {% if cnt == 30 %}
                                 <td class="dd pl-1">{{m.d30}}</td>
                                 {% elif cnt == 31 %}
                                 <td class="dd pl-1">{{m.d30}}</td>
                                 <td class="dd pl-1">{{m.d31}}</td>
                                 {% endif %}
-                                <td style="width: 20px; padding-left:5px; padding-right:5px; text-align: center; font-weight: bolder;" class="Ltot"></td>
+                                {% comment %} <td style="width: 20px; padding-left:5px; padding-right:5px; text-align: center; font-weight: bolder;" class="Ltot"></td> {% endcomment %}
                                 <td style="width: 20px; padding-left:5px; padding-right:5px; text-align: center; font-weight: bolder;" class="Atot"></td>
                             </tr>
                         {% endfor %}
@@ -134,10 +134,10 @@
                         Atot += 1;
                         $(this).html('&#11044;');
                         $(this).css('color','Red');
-                    } else if (valu == 'L'){
+                    {% comment %} } else if (valu == 'L'){
                         Ltot += 1;
                         $(this).html('&#11044;');
-                        $(this).css('color','Yellow');
+                        $(this).css('color','Yellow'); {% endcomment %}
                     } else if (valu == 'P'){
                         $(this).html('&#11044;');
                         $(this).css('color','LimeGreen');
@@ -155,9 +155,10 @@
             percent = parseFloat(p/{{counta}} * 100).toFixed(0);
             $('#info_div').text(percent + '%');
             
-            if ({{hour}} <= 11){
+            {% comment %} if ({{hour}} <= 11){
                 ajaxa();
-            }
+            } {% endcomment %}
+            ajaxa();
             startTime();
         });
 
@@ -205,7 +206,7 @@
 			//s = checkTime(s);
             if (ha>=7 && holder==''){
                 //window.location.href = 'http://localhost:2000/bday';
-                {% comment %} holder = setTimeout(function(){window.location.href = "{% url 'bday' %}";}, 60000); {% endcomment %}
+                holder = setTimeout(function(){window.location.href = "{% url 'bday' %}";}, 60000);
             }
 			document.getElementById("time").innerHTML =
 			h + ":" + m + " " + ampm;

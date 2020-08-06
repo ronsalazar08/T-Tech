@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'T_Tech',
     'office',
+    'contractor',
     'creform',
     'fabrication',
     'rbf',
@@ -44,7 +45,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'admin_reorder.middleware.ModelAdminReorder',
+    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'T_Tech.urls'
@@ -140,32 +141,45 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-# ADMIN_REORDER = (
-#     # Keep original label and models
-#     'auth',
+ADMIN_REORDER = (
+    # Keep original label and models
+    'auth',
 
-#     # Rename app
-#     {'app': 'office', 'label': 'Office',
-#         'models': ('office.employee',)},
-#     'hr',
-#     'contractor',
-#     'crimping_dies',
-#     'creform',
-#     'fabrication',
-#     {'app': 'office', 'label': 'Month',
-#         'models': ('office.january',
-#                     'office.february',
-#                     'office.march',
-#                     'office.april',
-#                     'office.may',
-#                     'office.june',
-#                     'office.july',
-#                     'office.august',
-#                     'office.september',
-#                     'office.october',
-#                     'office.november',
-#                     'office.december',
-#         )},
-
-# )
+    # Rename app
+    {'app': 'office', 'label': 'Office',
+        'models': ('office.employee',
+                    # 'office.january',
+                    # 'office.february',
+                    # 'office.march',
+                    # 'office.april',
+                    # 'office.may',
+                    # 'office.june',
+                    # 'office.july',
+                    # 'office.august',
+                    # 'office.september',
+                    # 'office.october',
+                    # 'office.november',
+                    # 'office.december',
+                    )},
+    # 'crimping_dies',
+    'creform',
+    'fabrication',
+    'rbf',
+    'hr',
+    {'app': 'office', 'label': 'Month',
+        'models': ('office.january',
+                    'office.february',
+                    'office.march',
+                    'office.april',
+                    'office.may',
+                    'office.june',
+                    'office.july',
+                    'office.august',
+                    'office.september',
+                    'office.october',
+                    'office.november',
+                    'office.december',
+        )},
+    'contractor',
+)
 

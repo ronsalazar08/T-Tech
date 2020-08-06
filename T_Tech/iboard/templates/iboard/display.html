@@ -1,0 +1,57 @@
+{% extends "T_Tech/base_iboard.html" %}
+{% load static %}
+{% block content %}
+
+    {% if emp.firstname|length > 0 %}
+        {% if urla|length > 0 %}
+        <audio autoplay>
+            <source src= "{% static 'T_Tech/bell.wav' %}" type="audio/wav">
+        </audio>
+        <audio autoplay onended = "infoBoard()" preload="none">
+            <source src= "{{urla}}" type="audio/wav">
+        </audio>
+        {% else %}
+        <audio autoplay onended = "infoBoard()" src= "{% static 'T_Tech/bell.wav' %}" type="audio/wav">
+        </audio>
+        {% endif %}
+    <div class="container-fluid " style="height: 1000px;">  
+        <div class="w-100 h-100 border border-dark rounded">
+            <div class="mx-auto text-center" style="height: 60%">
+                <img class="rounded mx-auto rounded-circle mt-5" style="width:500px; height: 500px;" src="{{urlb}}">
+            </div>
+            <div class="row mx-auto rounded justify-content-center" style="height: 40%">
+                <div class="text-center font-weight-bolder" style="font-size: 50px;">
+                    <hr class="border border-dark">{{emp.lastname}}, {{emp.firstname}} {{emp.middlename|make_list|first}}. <hr class="border border-dark">
+                    <span style="font-size:30px;">{{emp.position}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <audio autoplay onended = "infoBoard()" src= "{% static 'T_Tech/access_denied.wav' %}" type="audio/wav">
+    </audio>
+    <div class="container-fluid " style="height: 1000px ;">  
+        <div class="w-100 h-100 border border-dark rounded">
+            <div class="mx-auto text-center" style="height: 60%">
+                <img src="{% static 'T_Tech/no-avatar.png' %}" style="width:500px; height: 500px;" class="rounded mx-auto rounded-circle mt-5" >
+            </div>
+            <div class="row mx-auto rounded justify-content-center" style="height: 40%">
+                <div class="text-center font-weight-bolder text-danger" style="font-size: 50px;">
+                    <hr class="border border-dark">ACCESS DENIED<hr class="border border-dark">
+                    <span style="font-size:30px;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            setTimeout(function(){window.location.href="{% url 'iboard_home' %}";}, 10000);
+        });
+        
+        function infoBoard(){
+			window.location.href="{% url 'iboard_home' %}";
+		}
+    </script>
+{% endblock content %}

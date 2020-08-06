@@ -1,0 +1,464 @@
+{% extends "T_Tech/base_dark.html" %}
+{% load subt %}
+{% block content %}
+<center>
+    <div id="bloc2Logo" style="height: 30px; width: 100%">
+        <b><font size="5" style="color:white;"  id="deptTitle">FABRICATION</font></b>
+    </div>
+    {% comment %} <div id="loader" class="border border-white" style="width: 0%;"></div> {% endcomment %}
+</center>
+<div class="h-100 pl-4 pr-4">
+    <div class="row h-75">
+        <div class="row h-50 w-100 mx-auto pb-3 pt-2">
+            <div class="row pl-3 ">
+                <b><font size="3" class="text-white " >SALES</font></b>
+            </div>
+            <canvas id="myChart" class="border border-secondary rounded p-2"></canvas>
+        </div>
+        <div class="row h-50 w-100 mx-auto pt-5">
+            <div class="row pl-3">
+                <b><font size="3" class="text-white ">RFPGS MONITORING COMPLETION</font></b>
+            </div>
+            <div class="row w-100 mx-auto border border-secondary border-bottom-0 rounded">
+                <div class="col-6 ">
+                    <canvas id="myChartrfpgs"></canvas>
+                </div>
+                <div class="col-6 ">
+                    <canvas id="myChartrfpgs2">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row h-25">
+        <div class="col-12 border border-secondary rounded border-top-0" style="height: 90%"><br>
+            <div class="row mx-auto h-75 w-75 border border-white rounded" style="overflow:hidden;">
+                <table class="text-white table table-sm table-borderless font-weight-bold" style="font-size: 18px; line-height:1.45;">
+                    <thead style="font-size: 16px;" class="border border-white border-top-0 border-left-0 border-right-0">
+                        <tr>
+                            <th></th>
+                            <th>JAN</th><th>FEB</th><th>MAR</th><th>APR</th><th>MAY</th><th>JUN</th>
+                            <th>JUL</th><th>AUG</th><th>SEP</th><th>OCT</th><th>NOV</th><th>DEC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                            <td style="width: 300px;">ISSUED</td>
+                            {% for rfpg in fabrication_rfpgs %}
+                                <td  style="color: rgb(50, 100, 255, 1)">{{ rfpg.ISSUED }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                            <td>CLOSED</td>
+                            {% for rfpg in fabrication_rfpgs %}
+                                <td style="color: rgb(0, 255, 0,1)">{{ rfpg.CLOSED }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                            <td>OPEN</td>
+                            {% for rfpg in fabrication_rfpgs %}
+                                <td  style="color: rgb(255, 0, 0, 1)">{{ rfpg.ISSUED|subt:rfpg.CLOSED }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr >
+                            <td >CLOSED ON TARGET DATE</td>
+                            {% for rfpg in fabrication_rfpgs %}
+                                <td  style="color: rgb(255, 255, 0, 1)">{{ rfpg.CLOSED_WITH_IN_TARGET_DATE }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    
+    //==================================================================================================SALES
+
+    var fabsales=[];
+    var targetsales=[];
+    fabsales[0]=0;
+    {% for sale in fabrication_sales %}
+        fabsales[{{forloop.counter}}] = ({{sale.amount}} != 0) ? {{sale.amount}} : '.';
+    {% endfor %}
+    for (x=0; x<13; x++){
+        targetsales[x] = fabsales[13];
+    }
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var gradient = ctx.createLinearGradient(0,400,0,0);
+    gradient.addColorStop(0,"rgb(20, 20, 255, .2)");
+    gradient.addColorStop(1,"rgb(0, 255, 0, .5)");
+    Chart.defaults.global.defaultFontColor = 'white';
+    Chart.defaults.global.defaultFontSize = 20;
+    Chart.defaults.line.spanGaps = true;
+    Chart.defaults.global.defaultFontStyle = 'bold';
+    Chart.defaults.scale.gridLines.drawOnChartArea = false;
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['','JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [{
+                label: 'SALES',
+                lineTension: .2,
+                backgroundColor: gradient,
+                borderColor: gradient,
+                borderWidth: 4,
+                pointBackgroundColor: 'rgb(255, 255, 255)',
+                pointRadius: '6',
+                pointHoverRadius: '6',
+                data: fabsales,
+                datalabels: {
+                    display: function(context) {
+                        return context.dataset.data[context.dataIndex] !== 0 ;
+                    },
+                }
+            },{
+                label: 'TARGET',
+                borderColor: 'rgb(0, 255, 0, 1)',
+                pointRadius: '0',
+                pointHoverRadius: '0',
+                borderDash: [10,5],
+                borderWidth: .9,
+                data: targetsales,
+                datalabels: {
+                    display: false
+                }
+            }]
+        },
+        plugins: [ChartDataLabels],
+        options: {
+            spanGaps: false,
+            scales: {
+                xAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    ticks:{minRotation: 30}
+                }],
+                yAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    ticks:{
+                        beginAtZero: true,
+                        callback: function(value, index, values) {
+                            return value.toLocaleString();
+                        }
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: false
+            },
+            plugins: {
+                datalabels: {
+                    color: 'Black',
+                    anchor: 'middle', 
+                    clamp: 'true', 
+                    align: 'left',
+                    backgroundColor:'rgb(255,255,255, .6)',
+                    borderRadius: '5',
+                    //display: function(context) {
+                    //    return context.dataset.data[context.dataIndex] !== targetsales[0] && context.dataset.data[context.dataIndex] !== 0 ;
+                    //},
+                    formatter: function(value) {
+                        return commaify(value);
+                    }
+                },
+            },
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+        }
+    });
+
+    function commaify(value) {
+        var result = (''+value).replace(/^(-?\d+)(\d{3})/, '$1,$2');
+        return value == result? result : commaify(result);
+    }
+
+    //==================================================================================================RFPGS BAR
+    var monBarC=[];
+    var monBarO=[];
+    {% for rfpg in fabrication_rfpgs %}
+        monBarC[{{ forloop.counter0 }}] = {{rfpg.CLOSED}};
+        monBarO[{{ forloop.counter0 }}] = {{ rfpg.ISSUED|subt:rfpg.CLOSED }};
+    {% endfor %}
+    var ctx1 = document.getElementById('myChartrfpgs').getContext('2d');
+    Chart.plugins.unregister(ChartDataLabels);
+    var myChart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [{
+                label: 'CLOSED',
+                borderColor: 'rgb(0, 255, 0, 1)',
+                backgroundColor: 'rgb(0, 255, 0, .5)',
+                data: monBarC,
+                borderWidth: 2,
+            },{
+                label: 'OPEN',
+                borderColor: 'rgb(255, 40, 40, 1)',
+                backgroundColor: 'rgb(255, 40, 40, .5)',
+                data: monBarO,
+                borderWidth: 2,
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    ticks:{minRotation: 30},
+                    barPercentage: 0.5,
+                    stacked:true
+                }],
+                yAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    ticks:{
+                        beginAtZero: true,
+                    },
+                    stacked:true
+                }]
+            },
+            tooltips: {
+                enabled: false
+            },
+            plugins: {
+            },
+            legend: {
+                display: true
+            },
+            maintainAspectRatio: false,
+        }
+    });
+
+
+    //==================================================================================================RFPGS LINE
+    var monLine=[];
+    var issuedl = 0;
+    var closedwl = 0;
+    monLine[0]=0;
+    {% for rfpg in fabrication_rfpgs %}
+        issuedl = {{ rfpg.ISSUED }};
+        closedwl = {{ rfpg.CLOSED_WITH_IN_TARGET_DATE }};
+        monLine[{{ forloop.counter }}] = (closedwl / issuedl) * 100;
+    {% endfor %}
+    Chart.defaults.global.defaultFontColor = 'lightgray';
+    var ctx = document.getElementById('myChartrfpgs2').getContext('2d');
+    var gradient1 = ctx.createLinearGradient(0,320,0,0);
+        gradient1.addColorStop(0,"rgb(20, 20, 20, .3)");
+        gradient1.addColorStop(1,"rgb(255, 255, 0, .75)");
+    Chart.plugins.unregister(ChartDataLabels);
+    Chart.defaults.global.defaultFontStyle = 'bold';
+    var myChart2 = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['','JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [{
+                label: '% COMPLIANCE',
+                lineTension: .2,
+                backgroundColor: gradient1,
+                borderColor: gradient1,
+                pointBackgroundColor: 'rgb(255, 255, 255)',
+                pointBackgroundColor: gradient1,
+                pointBorderColor: 'white',
+                pointRadius: '5',
+                pointHoverRadius: '5',
+                data: monLine
+            },{
+                label: 'TARGET',
+                borderColor: 'rgb(0, 255, 0, 1)',
+                pointRadius: '0',
+                pointHoverRadius: '0',
+                borderDash: [10,5],
+                borderWidth: .9,
+                data: [90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, 90, ]
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    ticks:{minRotation: 30}
+                }],
+                yAxes: [{
+                    gridLines: { color: "rgb(255,255,255, 1)" }, 
+                    ticks:{
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        beginAtZero: true,
+                        callback: function(value, index, values) {
+                            return '%' + value;
+                        }
+                    }
+                }]
+            },
+            tooltips: {
+                enabled: false
+
+            },
+            plugins: {
+            },
+            maintainAspectRatio: false,
+        }
+    });
+    
+
+    //====================================================================================================CREFORM DATA
+    function creform(){
+        $('#loader').animate({width: "0%"}, 60000);
+        $('#deptTitle').slideUp(1000, function(){$('#deptTitle').text('CREFORM');}).slideDown(1000);
+
+        //sales
+        var creformsales=[];
+        creformsales[0]=0;
+        {% for salec in creform_sales %}
+            creformsales[{{forloop.counter}}] = ({{salec.amount}} != 0) ? {{salec.amount}} : '.';
+        {% endfor %}
+        for (x=0; x<13; x++){
+            myChart.data.datasets[0].data[x] = creformsales[x];
+            myChart.data.datasets[1].data[x] = creformsales[13];
+        }
+        myChart.update();
+
+        //rfpg bar
+        var crefbarC=[];
+        var crefbarO=[];
+        {% for rfpgsc in creform_rfpgs %}
+            crefbarC[{{ forloop.counter0 }}] = {{rfpgsc.CLOSED}};
+            crefbarO[{{ forloop.counter0 }}] = {{ rfpgsc.ISSUED|subt:rfpgsc.CLOSED }};
+        {% endfor %}
+        for (x=0; x<12; x++){
+            myChart1.data.datasets[0].data[x] = crefbarC[x];
+            myChart1.data.datasets[1].data[x] = crefbarO[x];
+        }
+        myChart1.update();
+
+        //rfpg line
+        var monLine=[];
+        var issuedl = 0;
+        var closedwl = 0;
+        monLine[0]=0;
+        {% for rfpgsc in creform_rfpgs %}
+            issuedl = {{ rfpgsc.ISSUED }};
+            closedwl = {{ rfpgsc.CLOSED_WITH_IN_TARGET_DATE }};
+            monLine[{{ forloop.counter }}] = (closedwl / issuedl) * 100;
+        {% endfor %}
+        for (x=0; x<13; x++){
+            myChart2.data.datasets[0].data[x] = monLine[x];
+        }
+        myChart2.update();
+
+        $('table tbody tr').remove();                                   
+        $('table tbody').append(`<tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                                    <td style="width: 300px;">ISSUED</td>
+                                    {% for rfpgsc in creform_rfpgs %}
+                                        <td  style="color: rgb(50, 100, 255, 1)">{{ rfpgsc.ISSUED }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                                    <td>CLOSED</td>
+                                    {% for rfpgsc in creform_rfpgs %}
+                                        <td style="color: rgb(0, 255, 0,1)">{{ rfpgsc.CLOSED }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                                    <td>OPEN</td>
+                                    {% for rfpgsc in creform_rfpgs %}
+                                        <td  style="color: rgb(255, 0, 0, 1)">{{ rfpgsc.ISSUED|subt:rfpgsc.CLOSED }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr >
+                                    <td >CLOSED ON TARGET DATE</td>
+                                    {% for rfpgsc in creform_rfpgs %}
+                                        <td  style="color: rgb(255, 255, 0, 1)">{{ rfpgsc.CLOSED_WITH_IN_TARGET_DATE }}</td>
+                                    {% endfor %}
+                                </tr>`);
+        
+    }
+
+
+    //====================================================================================================RBF DATA
+    function rbf(){
+        $('#loader').animate({width: "0%"}, 60000);
+        $('#deptTitle').slideUp(1000, function(){$('#deptTitle').text('RECIEVING BASE & FORK');}).slideDown(1000);
+
+        //sales
+        var rbfsales=[];
+        rbfsales[0]=0;
+        {% for salec in rbf_sales %}
+            rbfsales[{{forloop.counter}}] = ({{salec.amount}} != 0) ? {{salec.amount}} : '.';
+        {% endfor %}
+        for (x=0; x<13; x++){
+            myChart.data.datasets[0].data[x] = rbfsales[x];
+            myChart.data.datasets[1].data[x] = rbfsales[13];
+        }
+        myChart.update();
+
+        //rfpg bar
+        var crefbarC=[];
+        var crefbarO=[];
+        {% for rfpgsc in rbf_rfpgs %}
+            crefbarC[{{ forloop.counter0 }}] = {{rfpgsc.CLOSED}};
+            crefbarO[{{ forloop.counter0 }}] = {{ rfpgsc.ISSUED|subt:rfpgsc.CLOSED }};
+        {% endfor %}
+        for (x=0; x<12; x++){
+            myChart1.data.datasets[0].data[x] = crefbarC[x];
+            myChart1.data.datasets[1].data[x] = crefbarO[x];
+        }
+        myChart1.update();
+
+        //rfpg line
+        
+        var monLine=[];
+        var issuedl = 0;
+        var closedwl = 0;
+        monLine[0]=0;
+        {% for rfpgsc in rbf_rfpgs %}
+            issuedl = {{ rfpgsc.ISSUED }};
+            closedwl = {{ rfpgsc.CLOSED_WITH_IN_TARGET_DATE }};
+            monLine[{{ forloop.counter }}] = (closedwl / issuedl) * 100;
+        {% endfor %}
+        for (x=0; x<13; x++){
+            myChart2.data.datasets[0].data[x] = monLine[x];
+        }
+        myChart2.update();
+
+        $('table tbody tr').remove();
+
+        $('table tbody').append(`<tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                                    <td style="width: 300px;">ISSUED</td>
+                                    {% for rfpgsc in rbf_rfpgs %}
+                                        <td  style="color: rgb(50, 100, 255, 1)">{{ rfpgsc.ISSUED }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                                    <td>CLOSED</td>
+                                    {% for rfpgsc in rbf_rfpgs %}
+                                        <td style="color: rgb(0, 255, 0,1)">{{ rfpgsc.CLOSED }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr class="border border-secondary border-top-0 border-left-0 border-right-0">
+                                    <td>OPEN</td>
+                                    {% for rfpgsc in rbf_rfpgs %}
+                                        <td  style="color: rgb(255, 0, 0, 1)">{{ rfpgsc.ISSUED|subt:rfpgsc.CLOSED }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr >
+                                    <td >CLOSED ON TARGET DATE</td>
+                                    {% for rfpgsc in rbf_rfpgs %}
+                                        <td  style="color: rgb(255, 255, 0, 1)">{{ rfpgsc.CLOSED_WITH_IN_TARGET_DATE }}</td>
+                                    {% endfor %}
+                                </tr>`);
+        
+    }
+
+
+    $(document).ready(function(){
+        {% comment %} $('#loader').animate({width: "100%"}, 60000); {% endcomment %}
+        setTimeout(function(){creform()}, 60000); //update graphs to creform data
+        setTimeout(function(){rbf()}, 120000); //update graphs to creform data
+
+        {% comment %} setTimeout(function(){window.location.href="{% url 'dies_status' %}"}, 180000); {% endcomment %}
+        setTimeout(function(){window.location.href="{% url 'hr_manpower' %}"}, 180000);
+        
+    });
+</script>
+{% endblock content %}

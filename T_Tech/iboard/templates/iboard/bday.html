@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'T_Tech/styleIboard.css' %}">
+        <title> &#65279; </title>
+    </head>
+    <body class="bgbday" style="overflow:hidden;">
+        
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        {% comment %} <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> {% endcomment %}
+        {% comment %} <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> {% endcomment %}
+        <!--<script src="{% static 'office/main.js' %}"></script>-->
+    
+        <div class="ml-1 mr-1 text-center" style="height: 670px; overflow: hidden;">
+            
+            <div class="scrollo text-danger font-weight-bold" style="position:absolute; width:99.4%; font-size: 50px; height: {{empbc}}px ">
+                {% for e in empb %}
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span class="font-weight-bold  text-dark" style="font-size:70px;">{{e.firstname}} {{ e.middlename|make_list|first }}. {{e.lastname}}</span>
+                    <br>
+                    {{e.birthday|date:"F d"}}
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+        <style>
+            @keyframes ani{
+                {% comment %} from   {top:670px}
+                to {top:-{{empbc}}px} {% endcomment %}
+                from   {transform: translateY(670px);}
+                to {transform: translateY(-{{empbc}}px);}
+            }
+
+            .scrollo{
+                animation: ani {{count}}s linear;
+            }
+        </style>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                setTimeout(function(){window.location.href="{% url 'sales_graph' %}"}, {{count}}000);
+            });
+        </script>
+    </body>
+</html>
