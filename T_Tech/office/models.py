@@ -20,7 +20,7 @@ class employee(models.Model):
     status_choice = [ ('P', 'PRESENT'), 
                         # ('L', 'LATE'),
                         ('A', 'ABSENT') ]
-    rfid = models.IntegerField(unique=True)
+    rfid = models.CharField(max_length=10, unique=True)
     no = models.IntegerField()
     firstname = models.CharField(max_length=50)
     middlename = models.CharField(max_length=50)
