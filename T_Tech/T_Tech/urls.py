@@ -13,6 +13,7 @@ admin.site.index_title = ""
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('iboard/', include('iboard.urls')),
+    path('contractor/', include('contractor.urls')),
 ]
 
 

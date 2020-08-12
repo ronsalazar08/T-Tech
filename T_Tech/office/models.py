@@ -135,7 +135,7 @@ class january(models.Model):
 
     class Meta:
         verbose_name = ("january".upper())
-        verbose_name_plural = ("january")
+        verbose_name_plural = ("january".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -175,7 +175,7 @@ class february(models.Model):
 
     class Meta:
         verbose_name = ("february".upper())
-        verbose_name_plural = ("february")
+        verbose_name_plural = ("february".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -217,7 +217,7 @@ class march(models.Model):
 
     class Meta:
         verbose_name = ("march".upper())
-        verbose_name_plural = ("march")
+        verbose_name_plural = ("march".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -258,7 +258,7 @@ class april(models.Model):
 
     class Meta:
         verbose_name = ("april".upper())
-        verbose_name_plural = ("april")
+        verbose_name_plural = ("april".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -300,7 +300,7 @@ class may(models.Model):
 
     class Meta:
         verbose_name = ("may".upper())
-        verbose_name_plural = ("may")
+        verbose_name_plural = ("may".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -341,7 +341,7 @@ class june(models.Model):
 
     class Meta:
         verbose_name = ("june".upper())
-        verbose_name_plural = ("june")
+        verbose_name_plural = ("june".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -383,7 +383,7 @@ class july(models.Model):
 
     class Meta:
         verbose_name = ("july".upper())
-        verbose_name_plural = ("july")
+        verbose_name_plural = ("july".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -425,7 +425,7 @@ class august(models.Model):
 
     class Meta:
         verbose_name = ("august".upper())
-        verbose_name_plural = ("august")
+        verbose_name_plural = ("august".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -466,7 +466,7 @@ class september(models.Model):
 
     class Meta:
         verbose_name = ("september".upper())
-        verbose_name_plural = ("september")
+        verbose_name_plural = ("september".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -508,7 +508,7 @@ class october(models.Model):
 
     class Meta:
         verbose_name = ("october".upper())
-        verbose_name_plural = ("october")
+        verbose_name_plural = ("october".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -549,7 +549,7 @@ class november(models.Model):
 
     class Meta:
         verbose_name = ("november".upper())
-        verbose_name_plural = ("november")
+        verbose_name_plural = ("november".upper())
 
     def __str__(self):
         return str(self.rfid)
@@ -591,7 +591,7 @@ class december(models.Model):
 
     class Meta:
         verbose_name = ("december".upper())
-        verbose_name_plural = ("december")
+        verbose_name_plural = ("december".upper())
 
     def __str__(self):
         return str(self.rfid)
