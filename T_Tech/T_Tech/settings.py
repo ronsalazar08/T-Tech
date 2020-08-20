@@ -140,7 +140,6 @@ LOGIN_URL = 'login'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
-
 ADMIN_REORDER = (
     # Keep original label and models
     'auth',
@@ -166,7 +165,7 @@ ADMIN_REORDER = (
     'fabrication',
     'rbf',
     'hr',
-    {'app': 'office', 'label': 'Month',
+    {'app': 'office', 'label': 'Month (OFFICE)',
         'models': ('office.january',
                     'office.february',
                     'office.march',
@@ -182,8 +181,12 @@ ADMIN_REORDER = (
         )},
     {'app': 'contractor', 'label': 'Contractor',
         'models': ('contractor.employee',
-                    'contractor.logbox')},
-    {'app': 'contractor', 'label': 'Month',
+                    'contractor.logbox',
+                    'contractor.CurWeek',
+                    'contractor.CurWeekNS',
+                    'contractor.LasWeek',
+                    'contractor.LasWeekNS',)},
+    {'app': 'contractor', 'label': 'Month (Contractor)',
         'models': ('contractor.january',
                     'contractor.february',
                     'contractor.march',
@@ -198,4 +201,3 @@ ADMIN_REORDER = (
                     'contractor.december',
         )},
 )
-

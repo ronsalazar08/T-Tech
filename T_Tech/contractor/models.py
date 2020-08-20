@@ -1,33 +1,39 @@
-from django.db import models
-from datetime import datetime
-from django.db.models.signals import post_save
+import os
 from PIL import Image
+from django.db import models
 from django.apps import apps
+from datetime import datetime
+from django.utils import timezone
+from django.dispatch import receiver
 from django.utils.html import mark_safe
-from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext as _
 from django.db.models.query import QuerySet
+from django.db.models.signals import post_save
+from django.utils.translation import ugettext as _
+from django.core.exceptions import ValidationError
 
-class PollQuerySet(QuerySet):
-    def update(self, *args, **kwargs):
-        super().update(*args, **kwargs)
-        # for reload
-        pagestat.objects.all().update(stat='True')
+
+def content_file_name(instance, filename):
+    old_file = employee.objects.get(pk=instance.pk).picture
+    print(old_file.path)
+    os.remove(old_file.path)
+
+    ext = filename.split('.')[-1]
+    filename = f"{instance.id_number}.{ext}"
+    return os.path.join('contractor_pic_files', filename)
+    
 
 class employee(models.Model):
-    objects = PollQuerySet.as_manager() # override update for reload
-    
     status_choice = [ ('P', 'PRESENT'), ('L', 'LATE'), ('A', 'ABSENT') ]
     shift_choice = [ ('DS', 'DAY SHIFT'), ('NS', 'NIGHT SHIFT') ]
-
-    face_id = models.IntegerField(blank=True, unique=True)
+    face_id = models.IntegerField(unique=True)
+    id_number = models.IntegerField(unique=True, default=1)
     firstname = models.CharField(max_length=50)
     middlename = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     company = models.CharField(max_length=50)
     shift = models.CharField(max_length=2, choices=shift_choice)
     status = models.CharField(max_length=5, blank=True, null=True, choices=status_choice)
-    picture = models.ImageField(default="no-avatar.png", upload_to="pic_files")
+    picture = models.ImageField(default="no-avatar.png", upload_to=content_file_name)
 
     class Meta:
         verbose_name_plural = "EMPLOYEES"
@@ -40,28 +46,20 @@ class employee(models.Model):
         # capitalize name
         for field_name in ['firstname', 'middlename', 'lastname', 'company']:
             val = getattr(self, field_name, False)
-            if val:
-                setattr(self, field_name, val.upper())
-
-        try: # delete old file when replacing by updating the file
-            this = employee.objects.get(id=self.id)
-            if this.picture != self.picture & this.picture.url != '/media/no-avatar.png':
-                this.picture.delete(save=False)
-            if this.name_sound != self.name_sound:
-                this.name_sound.delete(save=False)
-        except: # when new photo then we do nothing, normal case
-            pass
-        try:
-            top = employee.objects.order_by('-id')[0]
-            self.face_id = top.face_id + 1
-        except:
-            self.face_id = 1
+            if val: setattr(self, field_name, val.upper())
+        if self.face_id == None:
+            try:
+                top = employee.objects.order_by('-id')[0]
+                self.face_id = top.face_id + 1
+            except:
+                self.face_id = 1
+        
         super(employee, self).save(*args, **kwargs)
 
         # resize image
+        size = (450,450)
         pic = Image.open(self.picture.path)
-        output_size = (300,300)
-        pic = pic.resize(output_size, Image.ANTIALIAS)
+        pic = pic.resize(size, Image.ANTIALIAS)
         pic.save(self.picture.path)
 
         # status to month
@@ -70,6 +68,28 @@ class employee(models.Model):
         field_name = 'd' + str(datetime.now().day)
         field_name_icontains = field_name + '__icontains'
         model.objects.filter(id = self.id).update(**{field_name: self.status})
+
+        try:
+            os.system("sshpass -p 'ttech001' ssh pi@10.44.2.133 'rm -f /home/pi/Desktop/TEST/IMAGE/*'")
+            print("UPDATING IMAGES")
+            os.system("sshpass -p 'ttech001' scp /home/linaro/Desktop/T-Tech/T_Tech/media/contractor_pic_files/* pi@10.44.2.133:/home/pi/Desktop/TEST/IMAGE")
+            print("IMAGES UPDATED")
+        except Exception as ex:
+            print(ex)
+
+
+    def delete(self, *args, **kwargs):
+        super(employee, self).delete(*args, **kwargs)
+        try:
+            print("DELETING IMAGE")
+            os.remove(self.picture.path)
+
+            os.system("sshpass -p 'ttech001' ssh pi@10.44.2.133 'rm -f /home/pi/Desktop/TEST/IMAGE/*'")
+            print("UPDATING IMAGES")
+            os.system("sshpass -p 'ttech001' scp /home/linaro/Desktop/T-Tech/T_Tech/media/contractor_pic_files/* pi@10.44.2.133:/home/pi/Desktop/TEST/IMAGE")
+            print("IMAGES UPDATED")
+        except Exception as ex:
+            print(ex)
 
     def thumbnail(self, *args, **kwargs):
         return mark_safe(f'<img src="{self.picture.url}" width="100" height="100" />')
@@ -81,18 +101,50 @@ class employee(models.Model):
 
 class logbox(models.Model):
     transact_choice = [('I', 'IN'), ('O', 'OUT')]
-    employee = models.ForeignKey(
-        employee, to_field="face_id", db_column="face_id", on_delete=models.CASCADE)
+    shift_choice = [ ('DS', 'DAY SHIFT'), ('NS', 'NIGHT SHIFT') ]
+    employee = models.ForeignKey(employee, to_field="face_id", db_column="face_id", on_delete=models.CASCADE)
     date_time = models.DateTimeField(null=True, blank=True)
     transaction = models.CharField(max_length=1, choices=transact_choice)
+    shift = models.CharField(max_length=2, choices=shift_choice, default='DS')
 
     class Meta:
         verbose_name_plural = "LOGBOX"
 
     def __str__(self):
-        employee = str(self.employee)
-        return str(employee)
+        return str(self.employee)
 
+    def save(self, *args, **kwargs):
+        oras = self.date_time
+        mon = (self.date_time).strftime("%B").lower()
+        model = apps.get_model('contractor', mon)
+        field_name = 'd' + str(self.date_time.strftime("%d").lstrip('0'))
+        today7o1am = oras.replace(hour=7, minute=1, second=0, microsecond=0)
+        today7o1pm = oras.replace(hour=19, minute=1, second=0, microsecond=0)
+        if self.transaction == 'I':
+            if oras < today7o1am and self.shift == 'DS':
+                s = 'P'
+            elif oras >= today7o1am and self.shift == 'DS':
+                s = 'L'
+            elif oras < today7o1pm and self.shift == 'NS':
+                s = 'P'
+            elif oras >= today7o1pm and self.shift == 'NS':
+                s = 'L'
+            emp = employee.objects.get(face_id = self.employee.face_id)
+            d = model.objects.get(id = emp.id)
+            setattr(d, field_name, s)
+            d.save()
+        super(logbox, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        oras = self.date_time.strftime("%H:%M:%S")
+        mon = (self.date_time).strftime("%B").lower()
+        model = apps.get_model('contractor', mon)
+        field_name = 'd' + str(self.date_time.strftime("%d").lstrip('0'))
+        emp = employee.objects.get(face_id = self.employee.face_id)
+        d = model.objects.get(id = emp.id)
+        setattr(d, field_name, '')
+        d.save()
+        super(logbox, self).delete(*args, **kwargs)
 
 def create_on_month(sender, **kwargs):
     if kwargs['created']:
@@ -608,3 +660,45 @@ class december(models.Model):
 
     def __str__(self):
         return str(self.face_id)
+
+
+
+global current_week, last_week, last2_week, last3_week
+t = timezone.now().weekday()
+ts = timezone.now() + timezone.timedelta(days=-t)
+currentweekf = ts + timezone.timedelta(days=-1)
+currentweekl = ts + timezone.timedelta(days=+5)
+lastweekf = ts + timezone.timedelta(days=-8)
+lastweekl = ts + timezone.timedelta(days=-2)
+
+
+current_week = currentweekf.strftime(
+    "%B %d") + ' - ' + currentweekl.strftime("%B %d")
+last_week = lastweekf.strftime(
+    "%B %d") + ' - ' + lastweekl.strftime("%B %d")
+
+
+
+
+class CurWeek(models.Model):
+    class Meta:
+        verbose_name_plural = 'CURRENT WEEK DS __________(' + str(current_week) + ')'
+        app_label = 'contractor'
+
+
+class CurWeekNS(models.Model):
+    class Meta:
+        verbose_name_plural = 'CURRENT WEEK NS __________(' + str(current_week) + ')'
+        app_label = 'contractor'
+        
+
+class LasWeek(models.Model):
+    class Meta:
+        verbose_name_plural = 'LAST WEEK DS_______________(' + str(last_week) + ')'
+        app_label = 'contractor'
+        
+
+class LasWeekNS(models.Model):
+    class Meta:
+        verbose_name_plural = 'LAST WEEK NS_______________(' + str(last_week) + ')'
+        app_label = 'contractor'

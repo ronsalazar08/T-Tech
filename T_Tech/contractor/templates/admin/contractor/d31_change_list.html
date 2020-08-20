@@ -1,0 +1,68 @@
+{% extends 'admin/change_list.html' %}
+{% load i18n admin_urls static admin_list %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    @media print{
+      h1, .breadcrumbs, #user-tools, .paginator, #changelist-filter {
+        display: none;
+      }
+      #header{
+          background-color: inherit;
+          color: black;
+      }
+    }
+    #changelist-filter {
+      position: relative;
+      width: 100% !important;
+    }
+    h1, h3 {
+      display: none !important;
+    }
+    .results, table {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    #changelist-form .results {
+      overflow-x: visible !important;
+    }
+    #companyTitle {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #666666;
+    }
+  </style>
+
+  <script>
+    window.onload = function() {
+      field = document.querySelectorAll(".field-d1, .field-d2, .field-d3, .field-d4, .field-d5, .field-d6, .field-d7, .field-d8, .field-d9, .field-d10, .field-d11, .field-d12, .field-d13, .field-d14, .field-d15, .field-d16, .field-d17, .field-d18, .field-d19, .field-d20, .field-d21, .field-d22, .field-d23, .field-d24, .field-d25, .field-d26, .field-d27, .field-d28, .field-d29, .field-d30, .field-d31, .field-d32");
+      field.forEach(cellNull)
+      
+      d = document.querySelectorAll(".column-d1 > .text > a, .column-d2 > .text > a, .column-d3 > .text > a, .column-d4 > .text > a, .column-d5 > .text > a, .column-d6 > .text > a, .column-d7 > .text > a, .column-d8 > .text > a, .column-d9 > .text > a, .column-d10 > .text > a, .column-d11 > .text > a, .column-d12 > .text > a, .column-d13 > .text > a, .column-d14 > .text > a, .column-d15 > .text > a, .column-d16 > .text > a, .column-d17 > .text > a, .column-d18 > .text > a, .column-d19 > .text > a, .column-d20 > .text > a, .column-d21 > .text > a, .column-d22 > .text > a, .column-d23 > .text > a, .column-d24 > .text > a, .column-d25 > .text > a, .column-d26 > .text > a, .column-d27 > .text > a, .column-d28 > .text > a, .column-d29 > .text > a, .column-d30 > .text > a, .column-d31 > .text > a");
+      d.forEach(removeD);
+
+      selected = document.querySelectorAll(".selected > a");
+      //alert(selected[0].text);
+      var newItem = document.createElement("div");
+      var textnode = document.createTextNode(selected[0].text);
+      newItem.appendChild(textnode);
+      newItem.setAttribute('id', 'companyTitle');
+      var list = document.getElementById("result_list");
+      list.parentNode.insertBefore(newItem, list);
+    };
+
+
+    function removeD(item) {
+      item.text = item.text.substring(1);
+    }
+    function cellNull(item) {
+      if (item.innerHTML == 'NULL') {
+        item.innerHTML = '';
+      }
+    }
+    
+  </script>
+
+{% endblock %}

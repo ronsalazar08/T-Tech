@@ -10,6 +10,7 @@ import fabrication.models
 import creform.models
 import rbf.models
 from hr.models import *
+from contractor.models import employee as employee_contractor
 # from crimping_dies.models import *
 
 
@@ -99,6 +100,7 @@ def Reload(request):
             model.objects.filter(**{field_name: ''}).update(**{field_name: s})
             model.objects.filter(**{field_name: None}).update(**{field_name: s})
             employee.objects.all().update(status=None)
+            employee_contractor.objects.filter(shift='DS').update(status='-')
             olo.stat = 'True'
         if olo.stat == 'True':
             olo.stat = 'False'
