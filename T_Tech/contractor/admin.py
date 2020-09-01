@@ -38,7 +38,7 @@ class d31(admin.ModelAdmin):
     actions = None
     list_per_page = 200
     #search_fields = (['face_id__firstname', 'face_id__lastname'])
-    
+    ordering = (['face_id__lastname'])
     list_filter = ['face_id__company']
     change_list_template = 'admin/contractor/d31_change_list.html'
 
@@ -51,7 +51,7 @@ class d30(admin.ModelAdmin):
     actions = None
     list_per_page = 200
     #search_fields = (['face_id__firstname', 'face_id__lastname'])
-    
+    ordering = (['face_id__lastname'])
     list_filter = ['face_id__company']
     change_list_template = 'admin/contractor/d31_change_list.html'
 
@@ -64,7 +64,7 @@ class d29(admin.ModelAdmin):
     actions = None
     list_per_page = 200
     #search_fields = (['face_id__firstname', 'face_id__lastname'])
-    
+    ordering = (['face_id__lastname'])
     list_filter = ['face_id__company']
     change_list_template = 'admin/contractor/d31_change_list.html'
 

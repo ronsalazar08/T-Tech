@@ -13,10 +13,12 @@ from django.core.exceptions import ValidationError
 
 
 def content_file_name(instance, filename):
-    old_file = employee.objects.get(pk=instance.pk).picture
-    print(old_file.path)
-    os.remove(old_file.path)
-
+    try:
+        old_file = employee.objects.get(pk=instance.pk).picture
+        print(old_file.path)
+        os.remove(old_file.path)
+    except:
+        pass
     ext = filename.split('.')[-1]
     filename = f"{instance.id_number}.{ext}"
     return os.path.join('contractor_pic_files', filename)
@@ -57,11 +59,13 @@ class employee(models.Model):
         super(employee, self).save(*args, **kwargs)
 
         # resize image
-        size = (450,450)
-        pic = Image.open(self.picture.path)
-        pic = pic.resize(size, Image.ANTIALIAS)
-        pic.save(self.picture.path)
-
+        try:
+            size = (450,450)
+            pic = Image.open(self.picture.path)
+            pic = pic.resize(size, Image.ANTIALIAS)
+            pic.save(self.picture.path)
+        except:
+            pass
         # status to month
         mon = datetime.now().strftime("%B").lower()
         model = apps.get_model('contractor', mon)
@@ -70,6 +74,17 @@ class employee(models.Model):
         model.objects.filter(id = self.id).update(**{field_name: self.status})
 
         try:
+            this = employee.objects.get(pk = self.pk)
+            fil = str(this.picture)
+            filename = (fil.split('/'))[1]
+            filenumber = filename.split('.')[0]
+            ext = filename.split('.')[1]
+            final_filename = f"{self.id_number}.{ext}"
+            if str(self.id_number) != str(filenumber):
+                os.rename(str(this.picture.path), f"/home/linaro/Desktop/T-Tech/T_Tech/media/contractor_pic_files/{final_filename}")
+                this.picture = f"contractor_pic_files/{final_filename}"
+                this.save()
+                print("id_number is different to picture number")
             os.system("sshpass -p 'ttech001' ssh pi@10.44.2.133 'rm -f /home/pi/Desktop/TEST/IMAGE/*'")
             print("UPDATING IMAGES")
             os.system("sshpass -p 'ttech001' scp /home/linaro/Desktop/T-Tech/T_Tech/media/contractor_pic_files/* pi@10.44.2.133:/home/pi/Desktop/TEST/IMAGE")
