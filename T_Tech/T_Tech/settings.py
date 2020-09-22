@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kgb@sk=_wv-47etv3l+n+gv%t*qi_+by)wd6oebg%e_kems6u@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.44.2.161']
 
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'admin_reorder',
     'crispy_forms',
+    'widget_tweaks',
     'T_Tech',
     'office',
     'contractor',
@@ -185,7 +186,9 @@ ADMIN_REORDER = (
                     'contractor.CurWeek',
                     'contractor.CurWeekNS',
                     'contractor.LasWeek',
-                    'contractor.LasWeekNS',)},
+                    'contractor.LasWeekNS',
+                    'contractor.ComputationTemplateRegular',
+                    'contractor.ComputationTemplateNonRegular',)},
     {'app': 'contractor', 'label': 'Month (Contractor)',
         'models': ('contractor.january',
                     'contractor.february',

@@ -10,7 +10,7 @@ from . import views
 class emp(admin.ModelAdmin):
     fields = ['thumbnail', 'picture', 'id_number',
               'firstname', 'middlename', 'lastname',
-              'company','shift', 'status']
+              'company', 'position', 'shift', 'status']
     readonly_fields = ['thumbnail']
     list_display = ['__str__', 'id_number', 'company', 'shift', 'status', 'action']
     list_filter = ['company', 'shift', 'status']
@@ -107,8 +107,30 @@ class LastWeekAdminNS(admin.ModelAdmin):
         return [
             path('', views.LastWeekNS, name=view_name),
         ]
+        
+
+class ComputationTemplateRegularAdmin(admin.ModelAdmin):
+    model = ComputationTemplateRegular
+    def get_urls(self):
+        view_name = '{}_{}_changelist'.format(
+            self.model._meta.app_label, self.model._meta.model_name)
+        return [
+            path('', views.computation_template_regular, name=view_name),
+        ]
 
 
+class ComputationTemplateNonRegularAdmin(admin.ModelAdmin):
+    model = ComputationTemplateNonRegular
+    def get_urls(self):
+        view_name = '{}_{}_changelist'.format(
+            self.model._meta.app_label, self.model._meta.model_name)
+        return [
+            path('', views.computation_template_non_regular, name=view_name),
+        ]
+
+
+admin.site.register(ComputationTemplateRegular, ComputationTemplateRegularAdmin)
+admin.site.register(ComputationTemplateNonRegular, ComputationTemplateNonRegularAdmin)
 admin.site.register(CurWeek, CurrentWeekAdmin)
 admin.site.register(CurWeekNS, CurrentWeekAdminNS)
 admin.site.register(LasWeek, LastWeekAdmin)

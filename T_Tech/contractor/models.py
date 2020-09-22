@@ -16,7 +16,8 @@ def content_file_name(instance, filename):
     try:
         old_file = employee.objects.get(pk=instance.pk).picture
         print(old_file.path)
-        os.remove(old_file.path)
+        if old_file != 'no-avatar.png':
+            os.remove(old_file.path)
     except:
         pass
     ext = filename.split('.')[-1]
@@ -27,12 +28,14 @@ def content_file_name(instance, filename):
 class employee(models.Model):
     status_choice = [ ('P', 'PRESENT'), ('L', 'LATE'), ('A', 'ABSENT') ]
     shift_choice = [ ('DS', 'DAY SHIFT'), ('NS', 'NIGHT SHIFT') ]
+    position_choice = [ ('R', 'REGULAR'), ('NR', 'NON-REGULAR') ]
     face_id = models.IntegerField(unique=True)
     id_number = models.IntegerField(unique=True, default=1)
     firstname = models.CharField(max_length=50)
     middlename = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     company = models.CharField(max_length=50)
+    position = models.CharField(max_length=50, choices=position_choice, default='')
     shift = models.CharField(max_length=2, choices=shift_choice)
     status = models.CharField(max_length=5, blank=True, null=True, choices=status_choice)
     picture = models.ImageField(default="no-avatar.png", upload_to=content_file_name)
@@ -716,4 +719,16 @@ class LasWeek(models.Model):
 class LasWeekNS(models.Model):
     class Meta:
         verbose_name_plural = 'LAST WEEK NS_______________(' + str(last_week) + ')'
+        app_label = 'contractor'
+
+
+class ComputationTemplateRegular(models.Model):
+    class Meta:
+        verbose_name_plural = 'PAYROLL FORM_______________(REGULAR)'
+        app_label = 'contractor'
+        
+
+class ComputationTemplateNonRegular(models.Model):
+    class Meta:
+        verbose_name_plural = 'PAYROLL FORM_______________(NON-REGULAR)'
         app_label = 'contractor'

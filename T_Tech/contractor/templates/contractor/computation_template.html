@@ -1,0 +1,163 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% load i18n admin_urls static admin_modify %}
+{% load index_day %}
+{% load index_ot %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+<script type="text/javascript">
+    document.title = '| T-TECH'
+</script>
+
+    <style>
+        @media print{
+            .dontPrint{
+                display: none;
+            }
+            body{
+                transform.scale(.9);
+            }
+            #header{
+                display: none;
+            }
+        }
+        .thead th{
+            text-align: center; 
+            border: solid 1px #E5E8E8; 
+        }
+        .tbody td{
+            padding: 5px; 
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            border: solid 1px #E5E8E8;
+        }
+        .brsmall { 
+            display: block; 
+            margin-bottom: -.5em; 
+        }
+        .font-8 {
+            font-size: 8px;
+        } 
+        
+    </style>
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs dontPrint">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+</div>
+{% endblock %}
+{% endif %}
+
+{% block content %}
+    <div style="display: flex; justify-content: center;">
+        <table style="width: 100%;" >
+            <thead class="thead">
+                <tr>
+                    <th colspan=14 style="font-size: 20px; color: white; background-color: black;">
+                        {% if request.user.username == "blairwin" %}
+                            JIG FABRICATION ATTENDANCE ({{user}} TECH)
+                        {% else %}
+                            {{user}}
+                        {% endif %}
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan=14 >
+                        <div class="text">
+                            <select style="border:0px; outline:0px; background-color: inherit; font-size: 14px; font-weight: bold; color: black; appearance: none;">
+                                <option>{{ts.0|date:"F d, Y"|upper}} TO {{ts.6|date:"F d, Y"|upper}}</option>
+                                <option>{{ts.7|date:"F d, Y"|upper}} TO {{ts.13|date:"F d, Y"|upper}}</option>
+                            </select>
+                        </div>
+                        
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="text font-8">NO.</div>
+                    </th>
+                    <th>
+                        <div class="text font-8" style="width: 220px !important;">NAME</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">NO. OF OT HOURS</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">OT RATE</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">TOTAL OT PAY</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">TRANSPO ALLOWANCE</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">DAYS WORKED</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">RATE PER DAY</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">TOTAL BASIC PAY</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">LEGAL HOLIDAY PAY</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">SUNDAY WORK DAY</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">SUNDAY RATE</div>
+                    </th>
+                    <th>
+                        <div class="text font-8">TOTAL SUNDAY PAY</div>
+                    </th>
+                    <th>
+                        <div class="text">TOTAL(PHP)</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="tbody">
+                {% for q in query %}
+                <tr>
+                    <td >{{ forloop.counter }}</td>
+                    <td style="text-align: left; width: 220px !important;">{{q.lastname}}, {{q.firstname}} {{q.middlename}}.</td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                </tr>
+                {% if forloop.last %}
+                <tr>
+                    <td colspan=14 style="border: 0px; !important;"></td>
+                </tr>
+                <tr>
+                    <td colspan=12 style="border: 0px !important;"></td>
+                    <td style="color: white; background-color: black;">TOTAL</td>
+                    <td ></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
