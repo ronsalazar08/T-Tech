@@ -17,11 +17,11 @@ urlpatterns = [
     path('iboard/', include('iboard.urls')),
     path('contractor/', include('contractor.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='T_Tech/login.html'), name='login'),
-    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
-    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_URL}),
+    # re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    # re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_URL}),
 ]
 
 
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL,
-#                             document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                            document_root=settings.MEDIA_ROOT)
