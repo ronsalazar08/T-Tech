@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'kgb@sk=_wv-47etv3l+n+gv%t*qi_+by)wd6oebg%e_kems6u@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.44.2.161']
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'rbf',
     'hr',
     'iboard',
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -138,7 +139,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'login_success'
+LOGIN_REDIRECT_URL = '/home/'
 LOGIN_URL = 'login'
 
 ADMIN_REORDER = (

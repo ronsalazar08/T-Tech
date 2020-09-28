@@ -148,6 +148,8 @@ class logbox(models.Model):
             elif oras >= today7o1pm and self.shift == 'NS':
                 s = 'L'
             emp = employee.objects.get(face_id = self.employee.face_id)
+            emp.status = s
+            emp.save()
             d = model.objects.get(id = emp.id)
             setattr(d, field_name, s)
             d.save()
