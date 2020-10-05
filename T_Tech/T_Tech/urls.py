@@ -15,13 +15,11 @@ admin.site.enable_nav_sidebar = False
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('iboard/', include('iboard.urls')),
-    path('home/', include('home.urls')),
+    path('', include('iboard.urls')),
+    path('dashboard/', include('home.urls')),
     path('contractor/', include('contractor.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='T_Tech/login.html'), name='login'),
     path('logout/', home_views.Logout, name='logout'),
-    # re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
-    # re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_URL}),
 ]
 
 
