@@ -1,0 +1,107 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+
+  <div class="container-fluid  pb-0">
+    <div class="row pb-0 mb-0">
+      <div class="col-md-12 pb-0 mb-0">
+        <div class="card pb-0 mb-0">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">List of Employees</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class=" text-primary">
+                  <tr>
+                    <th style="width:25%">NAME</th>
+                    {% for c in count %}
+                      <th class="text-center">{{ forloop.counter }}</th>
+                    {% endfor %}
+                    <th class="text-center">A</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for m in monsq %}
+                  <tr>
+                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+                    <td style="width:25%">{{m.name}}</td>
+                    <td>{{m.d1|default_if_none:""}}</td>
+                    <td>{{m.d2|default_if_none:""}}</td>
+                    <td>{{m.d3|default_if_none:""}}</td>
+                    <td>{{m.d4|default_if_none:""}}</td>
+                    <td>{{m.d5|default_if_none:""}}</td>
+                    <td>{{m.d6|default_if_none:""}}</td>
+                    <td>{{m.d7|default_if_none:""}}</td>
+                    <td>{{m.d8|default_if_none:""}}</td>
+                    <td>{{m.d9|default_if_none:""}}</td>
+                    <td>{{m.d10|default_if_none:""}}</td>
+                    <td>{{m.d11|default_if_none:""}}</td>
+                    <td>{{m.d12|default_if_none:""}}</td>
+                    <td>{{m.d13|default_if_none:""}}</td>
+                    <td>{{m.d14|default_if_none:""}}</td>
+                    <td>{{m.d15|default_if_none:""}}</td>
+                    <td>{{m.d16|default_if_none:""}}</td>
+                    <td>{{m.d17|default_if_none:""}}</td>
+                    <td>{{m.d18|default_if_none:""}}</td>
+                    <td>{{m.d19|default_if_none:""}}</td>
+                    <td>{{m.d20|default_if_none:""}}</td>
+                    <td>{{m.d21|default_if_none:""}}</td>
+                    <td>{{m.d22|default_if_none:""}}</td>
+                    <td>{{m.d23|default_if_none:""}}</td>
+                    <td>{{m.d24|default_if_none:""}}</td>
+                    <td>{{m.d25|default_if_none:""}}</td>
+                    <td>{{m.d26|default_if_none:""}}</td>
+                    <td>{{m.d27|default_if_none:""}}</td>
+                    <td>{{m.d28|default_if_none:""}}</td>
+                    <td>{{m.d29|default_if_none:""}}</td>
+                    {% if cnt == 30 %}
+                    <td>{{m.d30|default_if_none:""}}</td>
+                    {% elif cnt == 31 %}
+                    <td>{{m.d30|default_if_none:""}}</td>
+                    <td>{{m.d31|default_if_none:""}}</td>
+                    {% endif %}
+                    <td class="Atot"></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation example">
+              {% if is_paginated %}
+                <ul class="pagination justify-content-end mr-3">
+                  {% if page_obj.has_previous %}
+                    <li class="border-top border-bottom border-left page-item rounded-left"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.previous_page_number }}">&laquo; PREVIOUS</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom border-left page-item page-link disabled rounded-left" style="color: grey; pointer-events: none;"><span>&laquo; PREVIOUS</span></li>
+                  {% endif %}
+                  {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                      <li class="border-top border-bottom page-item page-link rounded-circle text-light" style="background-color: #9C27B0;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded-circle" style="color: #9C27B0;" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                    <li class="border-top border-bottom border-right page-item rounded-right"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.next_page_number }}">NEXT &raquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom border-right page-item page-link disabled rounded-right" style="color: grey; pointer-events: none;"><span>NEXT &raquo;</span></li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+{% endblock content %}
+
+
+{% block script %}
+
+{% endblock script %}
