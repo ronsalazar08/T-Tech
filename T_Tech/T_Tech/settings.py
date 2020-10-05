@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'rbf',
     'hr',
     'iboard',
-    'home',
 ]
 
 MIDDLEWARE = [

@@ -117,9 +117,9 @@ def Reload(request):
 
 def Bday(request):
     m = timezone.now().strftime("%m")
-    empi = employee.objects.filter(
+    empi = office.employee.objects.filter(
         birthday__contains=f'-{m}-').order_by('birthday')
-    emp = employee.objects.raw(
+    emp = office.employee.objects.raw(
         f"select * from office_employee where birthday LIKE '%%-{m}-%%' order by IF(MONTH(birthday) < MONTH(NOW()), MONTH(birthday) + 12, MONTH(birthday)),  DAY(birthday)")
 
     context = {
