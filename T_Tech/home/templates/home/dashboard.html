@@ -3,34 +3,66 @@
 
 <div class="container-fluid">
   <div class="row">
+    {% comment %} <div class="col-lg-1 col-md-0 col-sm-0">
+    </div> {% endcomment %}
     <div class="col-lg-4 col-md-12 col-sm-12">
       <div class="card card-stats">
         <div class="card-header card-header-info card-header-icon">
           <div class="card-icon">
-            <i class="material-icons">person</i>
+            <i class="material-icons">insert_invitation</i>
           </div>
-          <p class="card-category">Employees</p>
-          <h3 class="card-title">  
-              {{emps.present.count}} / {{emps.total}}
+          <p class="card-category">Date Today</p>
+          <h3 class="card-title ">
+            <span style="font-size: .5em;"> </span> 
+            <span >{{date_today|date:"M d, Y"}} </span>
+            <br>
+            <hr style="margin:0 !important; padding:0 !important; line-height:0px;"  class="border-top">
+            <span style="font-size: .5em;"></span> &nbsp;
+            <span class="text-primary"></span>
+            {% comment %} {{date_today|date:"M d, Y"}} {% endcomment %}
           </h3>
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i class="material-icons">how_to_reg</i> <span class="text-info font-weight-bold" style="font-size: 14px;">{{emps.percentage}}%</span> &nbsp; of Employees are Present
+            <i class="material-icons">thumb_up_alt</i>Be Productive and Keep Safe
           </div>
         </div>
       </div>
     </div>
-    {% if bday_list.count > 0 %}
-    <div class="col-lg-4 col-md-12 col-sm-12">
+    <div class="col-lg-4 col-md-6 col-sm-6">
       <div class="card card-stats">
-        <div class="card-header card-header-success card-header-icon">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">person</i>
+          </div>
+          <p class="card-category">Employees</p>
+          <h3 class="card-title">
+            <span style="font-size: .5em;"> </span> 
+            <span >{{emps.present.count}} / {{emps.total}} </span>
+            <br>
+            <hr style="margin:0 !important; padding:0 !important; line-height:0px;" class="border-top">
+            <span style="font-size: .5em;">Present Employees </span> &nbsp;
+            <span class="text-primary">{{emps.percentage}}% </span>
+          </h3>
+        </div>
+        <div class="card-footer">
+          <div class="stats">
+            <i class="material-icons">how_to_reg</i> 
+            Office Employees
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %} {% if bday_list.count > 0 %}
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-danger card-header-icon">
           <div class="card-icon">
             <i class="material-icons">cake</i>
           </div>
           <p class="card-category">This Month</p>
           <h3 class="card-title">
-              {{bday_list.count}} <span style="font-size:12px; line-height: 1px;">Employee(s)</span>
+              {{bday_list.count}} <span>Employee(s)</span>
           </h3>
         </div>
         <div class="card-footer">
@@ -40,79 +72,185 @@
         </div>
       </div>
     </div>
-    {% endif %}
-    <div class="col-lg-4 col-md-12 col-sm-12">
+    {% endif %} {% endcomment %}
+    <div class="col-lg-4 col-md-6 col-sm-6">
       <div class="card card-stats">
-        <div class="card-header card-header-warning card-header-icon">
+        <div class="card-header card-header-rose card-header-icon">
           <div class="card-icon">
             <i class="material-icons">perm_identity</i>
           </div>
           <p class="card-category">Contractor</p>
-          <h6 class="card-title font-weight-normal">
-            <span style="font-size: 18px; line-height:1px;">BLAIRWIN </span> <span style="font-size: 20px; line-height:1px; font-weight:bold;" class="text-info">{{contractor.blairwin}}% </span>
-            <div style="margin:0 !important; padding:0 !important; line-height:0px;"></div>
-            <span style="font-size: 18px; line-height:1px;">NGB </span> <span style="font-size: 20px; line-height:1px; font-weight:bold;" class="text-danger">{{contractor.ngb}}% </span>
-          </h6>
+          <h3 class="card-title">
+            <span style="font-size: .5em;">BLAIRWIN </span> 
+            <span style="font-size: 1em; line-height: 0px;" class="text-info">{{contractor.blairwin}}% </span>
+            <br>
+            <hr style="margin:0 !important; padding:0 !important; line-height:0px;" class="border-top">
+            <span style="font-size: .5em;">NGB </span> 
+            <span style="font-size: 1em; line-height: 0px;" class="text-danger">{{contractor.ngb}}% </span>
+          </h3>
         </div>
         <div class="card-footer">
           <div class="stats">
-            <i class="material-icons">info</i>Employee on site
+            <i class="material-icons">transfer_within_a_station</i>Sub-Con Employee on site
           </div>
         </div>
       </div>
     </div>
+    {% comment %} <div class="col-lg-1 col-md-0 col-sm-0">
+    </div> {% endcomment %}
   </div>
+{% for key, data in graph.items %}
   <div class="row">
-    <div class="col-md-4">
-      <div class="card card-chart">
-        <div class="card-header card-header-success">
-          <div class="ct-chart" id="dailySalesChart"></div>
+    <div class="card m-3" style="background-color: inherit; box-shadow:0px 0px 30px 0px gray;">
+      <div class="card-header card-header-icon card-header-{{data.color}}">
+        <div class="card-icon">
+          <i class="material-icons">{{data.icon}}</i><span style="font-size: 2em;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{key|upper}}</span>
         </div>
-        <div class="card-body">
-          <h4 class="card-title">Daily Sales</h4>
-          <p class="card-category">
-            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="material-icons">access_time</i> updated 4 minutes ago
+      </div>
+      <div class="card-body pb-0">
+        <div class="row">
+            <div class="col-md-4">
+            <div class="card card-chart">
+              <div class="card-header card-header-danger">
+                <div class="ct-chart" id="{{key}}SalesChart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Sales</h4>
+                <p class="card-category">
+                {% if data.current > data.target %}
+                <i class="text-success fa fa-long-arrow-up"></i>  Current Month Sale is above Target.
+                {% else %}
+                <i class="text-danger fa fa-long-arrow-down"></i>  Current Month Sale is below Target.
+                {% endif %}
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">insights</i> Monthly Target &nbsp;<span class="text-success">{{data.target}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-chart">
+              <div class="card-header card-header-success">
+                <div class="ct-chart" id="{{key}}RfpgsBarChart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">RFPGS Status</h4>
+                <p class="card-category">
+                  Status of <span class="text-success font-weight-bold">CLOSED</span> and
+                  <span class="text-danger font-weight-bold">OPEN</span> RFPGS
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">bar_chart</i> Data depends on manual input
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card card-chart">
+              <div class="card-header card-header-info">
+                <div class="ct-chart" id="{{key}}RfpgsLineChart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">RFPGS Compliance</h4>
+                <p class="card-category">Last Campaign Performance</p>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">show_chart</i> Monthly Target &nbsp;<span class="text-success">90%</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card card-chart">
-        <div class="card-header card-header-warning">
-          <div class="ct-chart" id="websiteViewsChart"></div>
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">Email Subscriptions</h4>
-          <p class="card-category">Last Campaign Performance</p>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="material-icons">access_time</i> campaign sent 2 days ago
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card card-chart">
-        <div class="card-header card-header-danger">
-          <div class="ct-chart" id="completedTasksChart"></div>
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">Completed Tasks</h4>
-          <p class="card-category">Last Campaign Performance</p>
-        </div>
-        <div class="card-footer">
-          <div class="stats">
-            <i class="material-icons">access_time</i> campaign sent 2 days ago
-          </div>
+      <div class="card-footer border-top">
+        <div class="stats">
+          <i class="material-icons">{{data.icon}}</i>{{key|capfirst}} Information
         </div>
       </div>
     </div>
   </div>
-</div>
+  <br>
 
+{% endfor %}
+
+  
+  <div class="row">
+    <div class="card m-3" style="background-color: inherit; box-shadow:0px 0px 30px 0px gray;">
+      <div class="card-header card-header-icon card-header-rose">
+        <div class="card-icon">
+          <i class="material-icons">people</i><span style="font-size: 2em;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HR</span>
+        </div>
+      </div>
+      <div class="card-body pb-0">
+        <div class="row">
+          <div class="col-md-3">
+          </div>
+          <div class="col-md-6">
+            <div class="card card-chart">
+              <div class="card-header card-header-primary">
+                <div class="ct-chart" id="hrBarChart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Manpower Status</h4>
+                <p class="card-category">
+                  Summary of Probationary, Regular and Borrowed Employees
+                </p>
+                <p class="card-category">
+                  Total: <span class="text-primary font-weight-bold">{{hr.total}}</span> Employees
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">access_time</i> as of &nbsp; <span class="font-weight-bold text-info">{{hr.date}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+          </div>
+        </div>
+      </div>
+      <div class="card-footer border-top">
+        <div class="stats">
+          <i class="material-icons">{{data.icon}}</i>{{key|capfirst}} Information
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!--end of container-fluid-->
+
+
+<script>
+  {% for key, data in graph.items %}
+    {{key}}Sales=[];
+    {% for sale in data.sales %}
+      {{key}}Sales[{{forloop.counter0}}] = ({{sale.amount}} != 0) ? {{sale.amount}} : '.';
+    {% endfor %}
+
+    iopen = []
+    iclosed = []
+    issued = []
+    icompliance = []
+    {% for rfpg in data.rfpgs %}
+      iopen[{{forloop.counter0}}] = {{rfpg.ISSUED}} - {{ rfpg.CLOSED }}
+      iclosed[{{forloop.counter0}}] = {{ rfpg.CLOSED }};
+      issued[{{forloop.counter0}}] = {{ rfpg.ISSUED }};
+      icompliance[{{forloop.counter0}}] = ({{rfpg.CLOSED_WITH_IN_TARGET_DATE}} / {{rfpg.ISSUED}}) * 100;
+    {% endfor %}
+    {{key}}Rfpgs = [iopen, iclosed, issued, icompliance];
+
+  {% endfor %}
+
+  hr={{hr.data}}
+
+  {% block chart_data %}
+  creformSales, creformRfpgs, fabricationSales, fabricationRfpgs, rbfSales, rbfRfpgs, hr
+  {% endblock chart_data %}
+</script>
 {% endblock content %}

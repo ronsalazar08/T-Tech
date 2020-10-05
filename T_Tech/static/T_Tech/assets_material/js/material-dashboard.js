@@ -183,36 +183,36 @@ md = {
     });
   },
 
-  initDocumentationCharts: function() {
-    if ($('#dailySalesChart').length != 0 && $('#websiteViewsChart').length != 0) {
-      /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
+  // initDocumentationCharts: function() {
+  //   if ($('#dailySalesChart').length != 0 && $('#websiteViewsChart').length != 0) {
+  //     /* ----------==========     Fabrication Sales Chart initialization For Documentation    ==========---------- */
 
-      dataDailySalesChart = {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-        series: [
-          [12, 17, 7, 17, 23, 18, 38]
-        ]
-      };
+  //     dataDailySalesChart = {
+  //       labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+  //       series: [
+  //         [12, 17, 7, 17, 23, 18, 38]
+  //       ]
+  //     };
 
-      optionsDailySalesChart = {
-        lineSmooth: Chartist.Interpolation.cardinal({
-          tension: 0
-        }),
-        low: 0,
-        high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-        chartPadding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
-        },
-      }
+  //     optionsDailySalesChart = {
+  //       lineSmooth: Chartist.Interpolation.cardinal({
+  //         tension: 0
+  //       }),
+  //       low: 0,
+  //       high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+  //       chartPadding: {
+  //         top: 0,
+  //         right: 0,
+  //         bottom: 0,
+  //         left: 0
+  //       },
+  //     }
 
-      var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+  //     var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
 
-      var animationHeaderChart = new Chartist.Line('#websiteViewsChart', dataDailySalesChart, optionsDailySalesChart);
-    }
-  },
+  //     var animationHeaderChart = new Chartist.Line('#websiteViewsChart', dataDailySalesChart, optionsDailySalesChart);
+  //   }
+  // },
 
 
   initFormExtendedDatetimepickers: function() {
@@ -307,90 +307,33 @@ md = {
     }
   },
 
-  initDashboardPageCharts: function() {
+  initDashboardPageCharts: function(creformSales, creformRfpgs, fabricationSales, fabricationRfpgs, rbfSales, rbfRfpgs, hr) {
 
-    if ($('#dailySalesChart').length != 0 || $('#completedTasksChart').length != 0 || $('#websiteViewsChart').length != 0) {
-      /* ----------==========     Daily Sales Chart initialization    ==========---------- */
+    // ____________________________________________HR ROW______________________________________________
+    if ($('#hrBarChart').length != 0) {
 
-      dataDailySalesChart = {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-        series: [
-          [12, 17, 7, 17, 23, 18, 38]
-        ]
+      /* ----------==========     creform RFPGS BAR Chart initialization    ==========---------- */
+
+      var datahrBarChart = {
+        labels: ['THC', 'TTECH', 'YTMI',],
+        series: hr
+
       };
-
-      optionsDailySalesChart = {
-        lineSmooth: Chartist.Interpolation.cardinal({
-          tension: 0
-        }),
+      var optionshrBarChart = {
+        // seriesBarDistance: 10,
+        // stackBars: true,
+        distributeSeries: true,
         low: 0,
-        high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+        high: Math.max.apply(Math, hr) + 50 ,  //highest count of rfpgs issued
         chartPadding: {
           top: 0,
           right: 0,
           bottom: 0,
-          left: 0
+          left: 20
         },
-      }
-
-      var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-      md.startAnimationForLineChart(dailySalesChart);
-
-
-
-      /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-      dataCompletedTasksChart = {
-        labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-        series: [
-          [230, 750, 450, 300, 280, 240, 200, 190]
-        ]
+        horizontalBars: true,
       };
-
-      optionsCompletedTasksChart = {
-        lineSmooth: Chartist.Interpolation.cardinal({
-          tension: 0
-        }),
-        low: 0,
-        high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-        chartPadding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0
-        }
-      }
-
-      var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-
-      // start animation for the Completed Tasks Chart - Line Chart
-      md.startAnimationForLineChart(completedTasksChart);
-
-
-      /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-      var dataWebsiteViewsChart = {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-        series: [
-          [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
-        ]
-      };
-      var optionsWebsiteViewsChart = {
-        axisX: {
-          showGrid: false
-        },
-        low: 0,
-        high: 1000,
-        chartPadding: {
-          top: 0,
-          right: 5,
-          bottom: 0,
-          left: 0
-        }
-      };
-      var responsiveOptions = [
+      var responsiveOptionshrBarChart = [
         ['screen and (max-width: 640px)', {
           seriesBarDistance: 5,
           axisX: {
@@ -400,10 +343,360 @@ md = {
           }
         }]
       ];
-      var websiteViewsChart = Chartist.Bar('#websiteViewsChart', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
+      var hrBarChart = Chartist.Bar('#hrBarChart', datahrBarChart, optionshrBarChart, responsiveOptionshrBarChart).on('draw', function(data) {
+        if(data.type === 'bar') {
+          data.element.attr({
+            style: 'stroke-width: 30px'
+          });
+        }
+      });
 
-      //start animation for the Emails Subscription Chart
-      md.startAnimationForBarChart(websiteViewsChart);
+      // md.startAnimationForBarChart(hrBarChart);
+    }
+
+
+    // ____________________________________________CREFORM ROW______________________________________________
+    if ($('#creformSalesChart').length != 0 || $('#creformRfpgsBarChart').length != 0 || $('#creformRfpgsLineChart').length != 0) {
+      /* ----------==========     creform Sales Chart initialization    ==========---------- */
+
+      datacreformSalesChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          creformSales.slice(0,12),
+        ],
+      };
+
+      optionscreformSalesChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        // showArea: true,
+        low: 0,
+        high: Math.max(creformSales), 
+        chartPadding: {
+          top: 5,
+          right: 0,
+          bottom: 0,
+          left: 10
+        },
+        axisY: {
+          scaleMinSpace: 10,
+          labelInterpolationFnc: function(value) {
+            return m(value, 1);
+          }
+        },
+        
+      }
+
+      var creformSalesChart = new Chartist.Line('#creformSalesChart', datacreformSalesChart, optionscreformSalesChart);
+
+      md.startAnimationForLineChart(creformSalesChart);
+
+
+      /* ----------==========     creform RFPGS BAR Chart initialization    ==========---------- */
+
+      var datacreformRfpgsBarChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          creformRfpgs[1],  //closed rfpgs creform
+          creformRfpgs[0],  //open rfpgs creform
+        ]
+      };
+      var optionscreformRfpgsBarChart = {
+        // seriesBarDistance: 10,
+        stackBars: true,
+        low: 0,
+        high: Math.max.apply(Math,creformRfpgs[2]) ,  //highest count of rfpgs issued
+        chartPadding: {
+          top: 0,
+          right: 5,
+          bottom: 0,
+          left: 0
+        }
+      };
+      var responsiveOptionscreformRfpgsBarChart = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function(value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+      var creformRfpgsBarChart = Chartist.Bar('#creformRfpgsBarChart', datacreformRfpgsBarChart, optionscreformRfpgsBarChart, responsiveOptionscreformRfpgsBarChart);
+
+      md.startAnimationForBarChart(creformRfpgsBarChart);
+
+
+      
+      /* ----------==========     creform RFPGS LINE Chart initialization    ==========---------- */
+
+      datacreformRfpgsLineChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          creformRfpgs[3],  //percentage of monthly compliance
+        ],
+      };
+
+      optionscreformRfpgsLineChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        // showArea: true,
+        low: 0,
+        high: 110, 
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+        axisY: {
+          scaleMinSpace: 10,
+          // divisor: 10,
+          // type: Chartist.FixedScaleAxis,
+          // ticks: [0, 20, 40, 60, 80, 100],
+          labelInterpolationFnc: function(value) {
+            return value+'%';
+          }
+        },
+        
+      }
+
+      var creformRfpgsLineChart = new Chartist.Line('#creformRfpgsLineChart', datacreformRfpgsLineChart, optionscreformRfpgsLineChart);
+
+      md.startAnimationForLineChart(creformRfpgsLineChart);
+    }
+
+
+    // ____________________________________________FABRICATION ROW______________________________________________
+    if ($('#fabricationSalesChart').length != 0 || $('#fabricationRfpgsBarChart').length != 0 || $('#fabricationRfpgsLineChart').length != 0) {
+      /* ----------==========     Fabrication Sales Chart initialization    ==========---------- */
+
+      datafabricationSalesChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          fabricationSales.slice(0,12),
+        ],
+      };
+
+      optionsFabricationSalesChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        // showArea: true,
+        low: 0,
+        high: Math.max(fabricationSales), 
+        chartPadding: {
+          top: 5,
+          right: 0,
+          bottom: 0,
+          left: 10
+        },
+        axisY: {
+          scaleMinSpace: 10,
+          labelInterpolationFnc: function(value) {
+            return m(value, 1);
+          }
+        },
+        
+      }
+
+      var fabricationSalesChart = new Chartist.Line('#fabricationSalesChart', datafabricationSalesChart, optionsFabricationSalesChart);
+
+      md.startAnimationForLineChart(fabricationSalesChart);
+
+
+      /* ----------==========     Fabrication RFPGS BAR Chart initialization    ==========---------- */
+
+      var dataFabricationRfpgsBarChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          fabricationRfpgs[1],  //closed rfpgs Fabrication
+          fabricationRfpgs[0],  //open rfpgs Fabrication
+        ]
+      };
+      var optionsFabricationRfpgsBarChart = {
+        // seriesBarDistance: 10,
+        stackBars: true,
+        low: 0,
+        high: Math.max.apply(Math,fabricationRfpgs[2]) ,  //highest count of rfpgs issued
+        chartPadding: {
+          top: 0,
+          right: 5,
+          bottom: 0,
+          left: 0
+        }
+      };
+      var responsiveOptionsFabricationRfpgsBarChart = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function(value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+      var fabricationRfpgsBarChart = Chartist.Bar('#fabricationRfpgsBarChart', dataFabricationRfpgsBarChart, optionsFabricationRfpgsBarChart, responsiveOptionsFabricationRfpgsBarChart);
+
+      md.startAnimationForBarChart(fabricationRfpgsBarChart);
+
+
+      
+      /* ----------==========     Fabrication RFPGS LINE Chart initialization    ==========---------- */
+
+      datafabricationRfpgsLineChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          fabricationRfpgs[3],  //percentage of monthly compliance
+        ],
+      };
+
+      optionsFabricationRfpgsLineChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        // showArea: true,
+        low: 0,
+        high: 110, 
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+        axisY: {
+          scaleMinSpace: 10,
+          // divisor: 10,
+          // type: Chartist.FixedScaleAxis,
+          // ticks: [0, 20, 40, 60, 80, 100],
+          labelInterpolationFnc: function(value) {
+            return value+'%';
+          }
+        },
+        
+      }
+
+      var fabricationRfpgsLineChart = new Chartist.Line('#fabricationRfpgsLineChart', datafabricationRfpgsLineChart, optionsFabricationRfpgsLineChart);
+
+      md.startAnimationForLineChart(fabricationRfpgsLineChart);
+    }
+
+
+    // ____________________________________________RBF ROW______________________________________________
+    if ($('#rbfSalesChart').length != 0 || $('#rbfRfpgsBarChart').length != 0 || $('#rbfRfpgsLineChart').length != 0) {
+      /* ----------==========     rbf Sales Chart initialization    ==========---------- */
+
+      datarbfSalesChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          rbfSales.slice(0,12),
+        ],
+      };
+
+      optionsrbfSalesChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        // showArea: true,
+        low: 0,
+        high: Math.max(rbfSales), 
+        chartPadding: {
+          top: 5,
+          right: 0,
+          bottom: 0,
+          left: 10
+        },
+        axisY: {
+          scaleMinSpace: 10,
+          labelInterpolationFnc: function(value) {
+            return m(value, 1);
+          }
+        },
+        
+      }
+
+      var rbfSalesChart = new Chartist.Line('#rbfSalesChart', datarbfSalesChart, optionsrbfSalesChart);
+
+      md.startAnimationForLineChart(rbfSalesChart);
+
+
+      /* ----------==========     rbf RFPGS BAR Chart initialization    ==========---------- */
+
+      var datarbfRfpgsBarChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          rbfRfpgs[1],  //closed rfpgs rbf
+          rbfRfpgs[0],  //open rfpgs rbf
+        ]
+      };
+      var optionsrbfRfpgsBarChart = {
+        // seriesBarDistance: 10,
+        stackBars: true,
+        low: 0,
+        high: Math.max.apply(Math,rbfRfpgs[2]) ,  //highest count of rfpgs issued
+        chartPadding: {
+          top: 0,
+          right: 5,
+          bottom: 0,
+          left: 0
+        }
+      };
+      var responsiveOptionsrbfRfpgsBarChart = [
+        ['screen and (max-width: 640px)', {
+          seriesBarDistance: 5,
+          axisX: {
+            labelInterpolationFnc: function(value) {
+              return value[0];
+            }
+          }
+        }]
+      ];
+      var rbfRfpgsBarChart = Chartist.Bar('#rbfRfpgsBarChart', datarbfRfpgsBarChart, optionsrbfRfpgsBarChart, responsiveOptionsrbfRfpgsBarChart);
+
+      md.startAnimationForBarChart(rbfRfpgsBarChart);
+
+
+      
+      /* ----------==========     rbf RFPGS LINE Chart initialization    ==========---------- */
+
+      datarbfRfpgsLineChart = {
+        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        series: [
+          rbfRfpgs[3],  //percentage of monthly compliance
+        ],
+      };
+
+      optionsrbfRfpgsLineChart = {
+        lineSmooth: Chartist.Interpolation.cardinal({
+          tension: 0
+        }),
+        // showArea: true,
+        low: 0,
+        high: 110, 
+        chartPadding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        },
+        axisY: {
+          scaleMinSpace: 10,
+          // divisor: 10,
+          // type: Chartist.FixedScaleAxis,
+          // ticks: [0, 20, 40, 60, 80, 100],
+          labelInterpolationFnc: function(value) {
+            return value+'%';
+          }
+        },
+        
+      }
+
+      var rbfRfpgsLineChart = new Chartist.Line('#rbfRfpgsLineChart', datarbfRfpgsLineChart, optionsrbfRfpgsLineChart);
+
+      md.startAnimationForLineChart(rbfRfpgsLineChart);
     }
   },
 
@@ -493,7 +786,7 @@ md = {
 
     chart.on('draw', function(data) {
       if (data.type === 'line' || data.type === 'area') {
-        data.element.animate({
+        data.element.animate({          
           d: {
             begin: 600,
             dur: 700,
@@ -732,3 +1025,7 @@ function debounce(func, wait, immediate) {
     if (immediate && !timeout) func.apply(context, args);
   };
 };
+
+function m(n,d){x=(''+n).length,p=Math.pow,d=p(10,d)
+x-=x%3
+return Math.round(n*d/p(10,x))/d+" kMGTPE"[x/3]}

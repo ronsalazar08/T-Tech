@@ -15,49 +15,51 @@ The above copyright notice and this permission notice shall be included in all c
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'T_Tech/assets_material/img/apple-icon.png' %}">
+  {% comment %} <link rel="apple-touch-icon" sizes="76x76" href="{% static 'T_Tech/assets_material/img/apple-icon.png' %}"> {% endcomment %}
   <link rel="icon" href="{% static 'T_Tech/logo.gif' %}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>I-BOARD | Home</title>
+  <title>{{title}} &#9474; T-TECH</title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"> {% endcomment %}
   <!-- CSS Files -->
   <link href="{% static 'T_Tech/assets_material/css/material-dashboard.css' %}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{% static 'T_Tech/assets_material/demo/demo.css' %}" rel="stylesheet" />
+  
+  <link href="{% static 'T_Tech/logo_animation.css' %}" rel="stylesheet">
 </head>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="{% static 'T_Tech/assets_material/img/sidebar-1.jpg' %}">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="{% static 'T_Tech/assets_material/img/sidebar-3.jpg' %}">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo"><a href="#" class="simple-text logo-normal">
-            <img src="{% static 'T_Tech/ttech_logo.png' %}" alt="ologo" width="40" height="40">&nbsp;&nbsp;&nbsp;INFORMATION BOARD
+            <img class='ologo' src="{% static 'T_Tech/ttech_logo.png' %}" alt="ologo" width="40" height="40">&nbsp;&nbsp;&nbsp;INFORMATION BOARD
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav font-weight-bold">
-          <li class="nav-item active">
+          <li class="nav-item {% if title == 'DASHBOARD' %}active{% endif %}">
             <a class="nav-link" href="{% url 'home' %}">
               <i class="material-icons">dashboard</i>
-              <p>Dashboard</p>
+              <p>DASHBOARD</p>
             </a>
           </li>
           {% if 'OFFICE' in lista %}
-          <li class="nav-item ">
-            <a class="nav-link" href="./user.html">
+          <li class="nav-item {% if title == 'OFFICE' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'office' %}">
               <i class="material-icons">apartment</i>
               <p>OFFICE</p>
             </a>
           </li>
           {% endif %}
           {% if 'CREFORM' in lista %}
-          <li class="nav-item ">
+          <li class="nav-item {% if title == 'CREFORM' %}active{% endif %}">
             <a class="nav-link" href="./tables.html">
               <i class="material-icons">build</i>
               <p>CREFORM</p>
@@ -65,7 +67,7 @@ The above copyright notice and this permission notice shall be included in all c
           </li>
           {% endif %}
           {% if 'FABRICATION' in lista %}
-          <li class="nav-item ">
+          <li class="nav-item {% if title == 'FABRICATION' %}active{% endif %}">
             <a class="nav-link" href="./typography.html">
               <i class="material-icons">construction</i>
               <p>FABRICATION</p>
@@ -73,15 +75,15 @@ The above copyright notice and this permission notice shall be included in all c
           </li>
           {% endif %}
           {% if 'RBF' in lista %}
-          <li class="nav-item ">
+          <li class="nav-item {% if title == 'RBF' %}active{% endif %}">
             <a class="nav-link" href="./icons.html">
               <i class="material-icons">settings</i>
-              <p>RBF</p>
+              <p>R-BASE & FORK</p>
             </a>
           </li>
           {% endif %}
           {% if 'HR' in lista %}
-            <li class="nav-item ">
+            <li class="nav-item {% if title == 'HR' %}active{% endif %}">
               <a class="nav-link" href="./map.html">
                 <i class="material-icons">people_alt</i>
                 <p>HR</p>
@@ -89,28 +91,13 @@ The above copyright notice and this permission notice shall be included in all c
             </li>
           {% endif %}
           {% if 'CONTRACTOR' in lista %}
-            <li class="nav-item ">
+            <li class="nav-item {% if title == 'CONTRACTOR' %}active{% endif %}">
               <a class="nav-link" href="./map.html">
                 <i class="material-icons">perm_identity</i>
                 <p>CONTRACTOR</p>
               </a>
             </li>
           {% endif %}
-          
-          {% comment %} {% for app in lista %}
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                <i class="material-icons">people</i>
-                <p>{{app}}</p>
-                </a>
-            </li>
-          {% endfor %}
-          <li class="nav-item active-pro ">
-            <a class="nav-link" href="./upgrade.html">
-              <i class="material-icons">unarchive</i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li> {% endcomment %}
         </ul>
       </div>
     </div>
@@ -119,7 +106,7 @@ The above copyright notice and this permission notice shall be included in all c
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;">Dashboard</a>
+            <a class="navbar-brand" href="javascript:;">{{title}}</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -146,13 +133,36 @@ The above copyright notice and this permission notice shall be included in all c
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
+      <div class="content pt-1 pb-1">
+
+      {% comment %} <div data-notify="container" class="col-11 col-md-4 alert alert-info alert-with-icon animated fadeInDown" role="alert" data-notify-position="top-center" style="display: inline-block; margin: 15px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031; top: 20px; left: 0px; right: 0px;">
+           <button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 50%; margin-top: -9px; z-index: 1033;">
+           <i class="material-icons">close</i></button><i data-notify="icon" class="material-icons">construction</i>
+           <span data-notify="title"></span>
+           <span data-notify="message">Welcome to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer.</span>
+           <a href="#" target="_blank" data-notify="url"></a>
+      </div> {% endcomment %}
+        {% if messages %}
+            {% for message in messages %}
+            {% comment %} <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li> {% endcomment %}
+            <div class="notifMessage alert alert-success alert-with-icon col-11 col-md-4 animated fadeInDown" data-notify="container" style="display: inline-block; margin: 15px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031; top: 20px; right: 20px;">
+              <i class="material-icons" data-notify="icon">construction</i>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="material-icons">close</i>
+              </button>
+              <span data-notify="message">{{ message|safe }}</span>
+            </div>
+            {% endfor %}
+        {% endif %}
         {% block content %}
         {% endblock content %}
       </div>
-      <footer class="footer">
-        <div class="container-fluid">
-          <nav class="float-left">
+      <footer class="footer pt-0">
+        <div class="container-fluid pt-0">
+          <nav class="float-left pt-0">
             <ul>
               <li>
                 <a href="#">
@@ -222,7 +232,7 @@ The above copyright notice and this permission notice shall be included in all c
   <!-- Library for adding dinamically elements -->
   <script src="{% static 'T_Tech/assets_material/js/plugins/arrive.min.js' %}"></script>
   <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  {% comment %} <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> {% endcomment %}
   <!-- Chartist JS -->
   <script src="{% static 'T_Tech/assets_material/js/plugins/chartist.min.js' %}"></script>
   <!--  Notifications Plugin    -->
@@ -403,10 +413,33 @@ The above copyright notice and this permission notice shall be included in all c
     });
   </script>
   <script>
+    var aheader = document.querySelector(".ologo");
+      var animationName = ["airplanePropeller", "pulsate",
+                            "lawnMower", "iWanChuBack", "nope",
+                            "heartBeat", "sleepyEyes"]
+      function triggerAnimation() {
+        var animation = animationName[Math.floor(Math.random() * 7)];
+        aheader.className = "";
+        setTimeout(function() {
+          aheader.className = animation;
+        }, 10);
+      
+      setTimeout(function() {
+          triggerAnimation()
+        }, 20000);
+      }
     $(document).ready(function() {
+      triggerAnimation();
+      setTimeout(function(){ 
+        $(".notifMessage").fadeOut('slow');
+      }, 5000);
       // Javascript method's body can be found in assets/js/demos.js
-      md.initDashboardPageCharts();
-
+      md.initDashboardPageCharts(
+        {% block chart_data %}
+        {% endblock chart_data %}
+      );
+      {% block script %}
+      {% endblock script %}
     });
   </script>
 </body>

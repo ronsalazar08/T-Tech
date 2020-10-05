@@ -73,7 +73,7 @@
                                 <td class="dd text-center" style="font-size: 11px;">{{m.d28|default_if_none:""}}</td>
                                 <td class="dd text-center" style="font-size: 11px;">{{m.d29|default_if_none:""}}</td>
                                 {% if cnt == 30 %}
-                                <td class="dd pl-1">{{m.d30}}</td>
+                                <td class="dd pl-1 text-center" style="font-size: 11px;">{{m.d30}}</td>
                                 {% elif cnt == 31 %}
                                 <td class="dd pl-1">{{m.d30}}</td>
                                 <td class="dd pl-1">{{m.d31}}</td>
@@ -180,7 +180,7 @@
 			if (e.keyCode == 13)
 			{
 				var val = $("#inputBox").val();
-                window.location.href="http://127.0.0.1/iboard/display/"+val;
+                window.location.href="{% url 'display' rfid=1 %}".replace(/1/, val.toString());
 				return false;
 			}
 			return true;

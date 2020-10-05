@@ -1,0 +1,42 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+
+<div class="container-fluid  pb-0">
+  <div class="row mt-5 pt-5">
+    <a href="{% url 'office_list' %}" class="col-md-6 mt-5 pt-5">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-info">
+            <div class="card-icon">
+              <i class="material-icons">people_alt</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">Employee List</h2>
+          </div>
+      </div>
+    </a>
+    <a href="#" class="col-md-6 mt-5 pt-5">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-warning">
+            <div class="card-icon">
+              <i class="material-icons">date_range</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">Monthly Attendance</h2>
+          </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<style>
+.hovera:hover{
+   box-shadow:0px 0px 100px 0px purple;
+   background-color: rgb(255,255,255, .5);
+}
+</style>
+
+
+{% endblock content %}

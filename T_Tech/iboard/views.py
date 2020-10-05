@@ -53,8 +53,9 @@ def Display(request, rfid):
             except:
                 urla = ""
             sevenam = datetime.strptime("07:00:00",  '%H:%M:%S')
-            elevenam = datetime.strptime("11:00:00",  '%H:%M:%S')
+            elevenam = datetime.strptime("14:00:00",  '%H:%M:%S')
             sixpm = datetime.strptime("18:00:00",  '%H:%M:%S')
+            print ('OLO')
             if datetime.now().time() < elevenam.time():
                 # employee.objects.filter(rfid=rfid).update(status='P') # update status of employee
                 emp.status = 'P'
