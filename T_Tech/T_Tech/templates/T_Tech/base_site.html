@@ -60,7 +60,7 @@ The above copyright notice and this permission notice shall be included in all c
           {% endif %}
           {% if 'CREFORM' in lista %}
           <li class="nav-item {% if title == 'CREFORM' %}active{% endif %}">
-            <a class="nav-link" href="./tables.html">
+            <a class="nav-link" href="{% url 'creform' %}">
               <i class="material-icons">build</i>
               <p>CREFORM</p>
             </a>

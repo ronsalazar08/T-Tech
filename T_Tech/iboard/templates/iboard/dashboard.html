@@ -1,4 +1,6 @@
 {% extends 'T_Tech/base_site.html' %}
+{% load humanize %}
+
 {% block content %}
 
 <div class="container-fluid">
@@ -101,7 +103,7 @@
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <i class="material-icons">insights</i> Monthly Target &nbsp;<span class="text-success">{{data.target}}</span>
+                  <i class="material-icons">insights</i> Monthly Target &nbsp;<span class="text-success">{{data.target|intcomma}}</span>
                 </div>
               </div>
             </div>
@@ -182,7 +184,7 @@
               </div>
               <div class="card-footer">
                 <div class="stats">
-                  <i class="material-icons">access_time</i> as of &nbsp; <span class="font-weight-bold text-info">{{hr.date}}</span>
+                  <i class="material-icons">access_time</i> Updated &nbsp; <span class="font-weight-bold text-info">{{ hr.date|naturaltime }}</span>
                 </div>
               </div>
             </div>
@@ -200,6 +202,11 @@
   </div>
 </div> <!--end of container-fluid-->
 
+<style>
+  .ct-vertical {
+    line-height:0 !important;
+  }
+</style>
 
 <script>
   {% for key, data in graph.items %}

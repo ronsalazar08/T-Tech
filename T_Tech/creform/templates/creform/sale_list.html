@@ -1,4 +1,5 @@
 {% extends 'T_Tech/base_site.html' %}
+{% load humanize %}
 
 {% block content %}
 
@@ -6,32 +7,26 @@
     <div class="row pb-0 mb-0">
       <div class="col-md-12 pb-0 mb-0">
         <div class="card pb-0 mb-0">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title ">List of Employees</h4>
+          <div class="card-header card-header-danger">
+            <h4 class="card-title ">Sales</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-hover">
-                <thead class=" text-primary">
+              <table class="table table-hover ">
+                <thead class=" text-danger">
                   <tr>
-                    <th class="pt-0 pb-0">Name</th>
-                    <th class="pt-0 pb-0">Postion</th>
-                    <th class="pt-0 pb-0">Birthday</th>
-                    <th class="pt-0 pb-0">Status</th>
-                    <th class="pt-0 pb-0">RFID</th>
+                    <th class="pt-0 pb-0">Month</th>
+                    <th class="pt-0 pb-0">Amount</th>
                     <th class="pt-0 pb-0"></th>
                   </tr>
                 </thead>
                 <tbody>
-                {% for emp in employees %}
+                {% for sale in sales %}
                   <tr>
-                    <td>{{emp}}</td>
-                    <td>{{emp.position}}</td>
-                    <td>{{emp.birthday|date:"M - d"}}</td>
-                    <td>{{emp.get_status_display|default_if_none:""}}</td>
-                    <td>{{emp.rfid}}</td>
+                    <td class="font-weight-bold">{{sale.name}}</td>
+                    <td>{{sale.amount|intcomma}}</td>
                     <td class="td-actions text-right">
-                      <a class="btn btn-primary text-light" href="{% url 'employee_update' pk=emp.pk %}">
+                      <a class="btn btn-danger text-light" href="{% url 'creform_sales_update' pk=sale.pk%}">
                           <i class="material-icons">edit</i>
                       </a>
                     </td>
@@ -43,19 +38,19 @@
               {% if is_paginated %}
                 <ul class="pagination justify-content-end mr-3">
                   {% if page_obj.has_previous %}
-                    <li class="border-top border-bottom border-left page-item rounded-left"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.previous_page_number }}">&laquo; PREVIOUS</a></li>
+                    <li class="border-top border-bottom border-left page-item rounded-left"><a class="page-link text-danger" href="?page={{ page_obj.previous_page_number }}">&laquo; PREVIOUS</a></li>
                   {% else %}
                     <li class="border-top border-bottom border-left page-item page-link disabled rounded-left" style="color: grey; pointer-events: none;"><span>&laquo; PREVIOUS</span></li>
                   {% endif %}
                   {% for i in paginator.page_range %}
                     {% if page_obj.number == i %}
-                      <li class="border-top border-bottom page-item page-link rounded-circle text-light" style="background-color: #9C27B0;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                      <li class="border-top border-bottom page-item page-link rounded-circle text-light bg-danger"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
                     {% else %}
-                      <li class="border-top border-bottom page-item"><a class="page-link rounded-circle" style="color: #9C27B0;" href="?page={{ i }}">{{ i }}</a></li>
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded-circle text-danger" href="?page={{ i }}">{{ i }}</a></li>
                     {% endif %}
                   {% endfor %}
                   {% if page_obj.has_next %}
-                    <li class="border-top border-bottom border-right page-item rounded-right"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.next_page_number }}">NEXT &raquo;</a></li>
+                    <li class="border-top border-bottom border-right page-item rounded-right"><a class="page-link text-danger" href="?page={{ page_obj.next_page_number }}">NEXT &raquo;</a></li>
                   {% else %}
                     <li class="border-top border-bottom border-right page-item page-link disabled rounded-right" style="color: grey; pointer-events: none;"><span>NEXT &raquo;</span></li>
                   {% endif %}

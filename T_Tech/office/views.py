@@ -55,7 +55,7 @@ class OfficeEmployeeUpdateView(SuccessMessageMixin, UpdateView):
     model = employee
     template_name = 'office/office_employee.html'
     context_object_name = 'employee'
-    success_message = '<strong>%(firstname)s</strong> Profile is now Updated!'
+    success_message = '<strong>%(firstname)s\'s</strong> Profile is now Updated!'
     fields = ('firstname', 'middlename', 'lastname', 'position', 'birthday', 'name_sound', 'picture', 'status')
     
     def get_context_data(self, **kwargs):
@@ -81,7 +81,7 @@ class MonthListView(ListView):
     m29 = ['february']
     context_object_name = 'monsq'  # Default: object_list
     queryset = employee.objects.raw(f"""select 1 as id, no,
-                                    concat(firstname, ' ', lastname) as name,
+                                    concat(lastname, ', ', firstname, LEFT(middlename, 1)) as name,
                                     office_{month}.* FROM office_employee inner join office_{month} 
                                     on office_employee.id = office_{month}.rfid_id ORDER BY no;""")
     if month in m31:

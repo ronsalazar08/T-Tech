@@ -374,7 +374,7 @@ md = {
         low: 0,
         high: Math.max(creformSales), 
         chartPadding: {
-          top: 5,
+          top: 10,
           right: 0,
           bottom: 0,
           left: 10
@@ -406,9 +406,9 @@ md = {
         // seriesBarDistance: 10,
         stackBars: true,
         low: 0,
-        high: Math.max.apply(Math,creformRfpgs[2]) ,  //highest count of rfpgs issued
+        high: Math.max.apply(Math,creformRfpgs[2]) + 10 ,  //highest count of rfpgs issued
         chartPadding: {
-          top: 0,
+          top: -5,
           right: 5,
           bottom: 0,
           left: 0
@@ -445,9 +445,9 @@ md = {
         }),
         // showArea: true,
         low: 0,
-        high: 110, 
+        high: 101, 
         chartPadding: {
-          top: 0,
+          top: -5,
           right: 0,
           bottom: 0,
           left: 0
@@ -489,7 +489,7 @@ md = {
         low: 0,
         high: Math.max(fabricationSales), 
         chartPadding: {
-          top: 5,
+          top: 10,
           right: 0,
           bottom: 0,
           left: 10
@@ -521,9 +521,9 @@ md = {
         // seriesBarDistance: 10,
         stackBars: true,
         low: 0,
-        high: Math.max.apply(Math,fabricationRfpgs[2]) ,  //highest count of rfpgs issued
+        high: Math.max.apply(Math,fabricationRfpgs[2]) + 10 ,  //highest count of rfpgs issued
         chartPadding: {
-          top: 0,
+          top: -5,
           right: 5,
           bottom: 0,
           left: 0
@@ -562,7 +562,7 @@ md = {
         low: 0,
         high: 110, 
         chartPadding: {
-          top: 0,
+          top: -5,
           right: 0,
           bottom: 0,
           left: 0
@@ -604,7 +604,7 @@ md = {
         low: 0,
         high: Math.max(rbfSales), 
         chartPadding: {
-          top: 5,
+          top: 10,
           right: 0,
           bottom: 0,
           left: 10
@@ -636,9 +636,9 @@ md = {
         // seriesBarDistance: 10,
         stackBars: true,
         low: 0,
-        high: Math.max.apply(Math,rbfRfpgs[2]) ,  //highest count of rfpgs issued
+        high: Math.max.apply(Math,rbfRfpgs[2]) + 10 ,  //highest count of rfpgs issued
         chartPadding: {
-          top: 0,
+          top: -5,
           right: 5,
           bottom: 0,
           left: 0
@@ -677,7 +677,7 @@ md = {
         low: 0,
         high: 110, 
         chartPadding: {
-          top: 0,
+          top: -5,
           right: 0,
           bottom: 0,
           left: 0

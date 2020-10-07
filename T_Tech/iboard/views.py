@@ -253,7 +253,7 @@ def dashboard(request):
                       },
         'graph' : sales_rfpgs_graph,
         'hr'    : {'data':[thc_total, ttech_total, ytmi_total],
-                   'date': date_as_of.date_modified.strftime("%b %d, %Y"),
+                   'date': date_as_of.date_modified,
                    'total': thc_total + ttech_total + ytmi_total },
 
     }

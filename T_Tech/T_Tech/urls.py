@@ -15,6 +15,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('iboard.urls')),
     path('office/', include('office.urls')),
+    path('creform/', include('creform.urls')),
     path('contractor/', include('contractor.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='T_Tech/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
