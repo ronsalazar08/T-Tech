@@ -45,7 +45,6 @@ class SaleListView(ListView):
         context.update({
             'title' : 'CREFORM',
             'lista' : permitted_apps(self.request.user),
-            'rfpgs' : rfpg.objects.all(),
         })
         return context
 
@@ -67,4 +66,39 @@ class SaleUpdateView(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('creform_sales')
+        # return reverse_lazy('book-detail', kwargs={'pk': self.object.id})
+
+
+class RfpgListView(ListView):
+    model = rfpg
+    template_name = "creform/rfpg_list.html"
+    context_object_name = 'rfpgs'  # Default: object_list
+    paginate_by = 6
+
+    def get_context_data(self, **kwargs):
+        context = super(RfpgListView, self).get_context_data(**kwargs)
+        context.update({
+            'title' : 'CREFORM',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+
+
+class RfpgUpdateView(SuccessMessageMixin, UpdateView):
+    model = rfpg
+    template_name = 'creform/rfpg_edit.html'
+    context_object_name = 'rfpgs'
+    success_message = 'Updating CREFORM <strong>%(name)s</strong> Rfpgs Successfull!'
+    fields = ('name', 'ISSUED', 'CLOSED', 'CLOSED_WITH_IN_TARGET_DATE')
+    
+    def get_context_data(self, **kwargs):
+        context = super(RfpgUpdateView, self).get_context_data(**kwargs)
+        context.update({
+            'title' : 'CREFORM',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('creform_rfpgs')
         # return reverse_lazy('book-detail', kwargs={'pk': self.object.id})

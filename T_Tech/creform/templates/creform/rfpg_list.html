@@ -1,33 +1,39 @@
 {% extends 'T_Tech/base_site.html' %}
 {% load humanize %}
-
+{% load subt %}
 {% block content %}
 
   <div class="container-fluid  pb-0">
     <div class="row pb-0 mb-0">
       <div class="col-md-12 pb-0 mb-0">
         <div class="card pb-0 mb-0">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title ">Sales</h4>
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">RFPGS</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-hover ">
-                <thead class=" text-danger">
+                <thead class=" text-success">
                   <tr>
                     <th class="pt-0 pb-0">Month</th>
-                    <th class="pt-0 pb-0">Amount</th>
+                    <th class="pt-0 pb-0">Issued</th>
+                    <th class="pt-0 pb-0">Open</th>
+                    <th class="pt-0 pb-0">Closed</th>
+                    <th class="pt-0 pb-0">On Target</th>
                     <th class="pt-0 pb-0"></th>
                   </tr>
                 </thead>
                 <tbody>
-                {% for sale in sales %}
+                {% for rfpg in rfpgs %}
                   <tr>
-                    <td class="font-weight-bold">{{sale.name}}</td>
-                    <td>{{sale.amount|intcomma}}</td>
+                    <td class="font-weight-bold">{{rfpg.name}}</td>
+                    <td>{{rfpg.ISSUED}}</td>
+                    <td>{{rfpg.ISSUED|subt:rfpg.CLOSED}}</td>
+                    <td>{{rfpg.CLOSED}}</td>
+                    <td>{{rfpg.CLOSED_WITH_IN_TARGET_DATE}}</td>
                     <td class="td-actions text-right">
                       {% with url_site=title %}
-                      <a class="btn btn-danger text-light" href="{% url url_site|lower|add:'_sales_update' pk=sale.pk%}">
+                      <a class="btn btn-success text-light" href="{% url url_site|lower|add:'_rfpgs_update' pk=rfpg.pk%}">
                           <i class="material-icons">edit</i>
                       </a>
                       {% endwith %}
@@ -40,19 +46,19 @@
               {% if is_paginated %}
                 <ul class="pagination justify-content-end mr-3">
                   {% if page_obj.has_previous %}
-                    <li class="border-top border-bottom border-left page-item rounded-left"><a class="page-link text-danger" href="?page={{ page_obj.previous_page_number }}">&laquo; PREVIOUS</a></li>
+                    <li class="border-top border-bottom border-left page-item rounded-left"><a class="page-link text-success" href="?page={{ page_obj.previous_page_number }}">&laquo; PREVIOUS</a></li>
                   {% else %}
                     <li class="border-top border-bottom border-left page-item page-link disabled rounded-left" style="color: grey; pointer-events: none;"><span>&laquo; PREVIOUS</span></li>
                   {% endif %}
                   {% for i in paginator.page_range %}
                     {% if page_obj.number == i %}
-                      <li class="border-top border-bottom page-item page-link rounded-circle text-light bg-danger"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                      <li class="border-top border-bottom page-item page-link rounded-circle text-light bg-success"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
                     {% else %}
-                      <li class="border-top border-bottom page-item"><a class="page-link rounded-circle text-danger" href="?page={{ i }}">{{ i }}</a></li>
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded-circle text-success" href="?page={{ i }}">{{ i }}</a></li>
                     {% endif %}
                   {% endfor %}
                   {% if page_obj.has_next %}
-                    <li class="border-top border-bottom border-right page-item rounded-right"><a class="page-link text-danger" href="?page={{ page_obj.next_page_number }}">NEXT &raquo;</a></li>
+                    <li class="border-top border-bottom border-right page-item rounded-right"><a class="page-link text-success" href="?page={{ page_obj.next_page_number }}">NEXT &raquo;</a></li>
                   {% else %}
                     <li class="border-top border-bottom border-right page-item page-link disabled rounded-right" style="color: grey; pointer-events: none;"><span>NEXT &raquo;</span></li>
                   {% endif %}
@@ -70,8 +76,3 @@
 
 
 {% endblock content %}
-
-
-{% block script %}
-
-{% endblock script %}

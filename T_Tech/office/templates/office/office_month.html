@@ -24,7 +24,7 @@
                 {% for m in monsq %}
                   <tr class="border-bottom">
                     {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
-                    <td class="p-1 pt-2" style="width:25% !important;">{{m.name}}</td>
+                    <td class="p-1 pt-2" style="width:25% !important;">{{m}}</td>
                     <td class="p-1 pt-2 dd">{{m.d1|default_if_none:""}}</td>
                     <td class="p-1 pt-2 dd">{{m.d2|default_if_none:""}}</td>
                     <td class="p-1 pt-2 dd">{{m.d3|default_if_none:""}}</td>

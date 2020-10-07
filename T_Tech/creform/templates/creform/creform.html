@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<div class="container-fluid  pb-0">
+<div class="container-fluid pt-5 pb-0">
   <div class="row mt-5 pt-5">
-    <a href="{% url 'creform_sales' %}" class="col-md-6 mt-5 pt-5">
+    {% with url_site=title %}
+    {% comment %} <a href="{% url 'creform_sales' %}" class="col-md-6"> {% endcomment %}
+    <a href="{% url url_site|lower|add:'_sales' %}" class="col-md-6">
       <div class="card card-stats hovera">
           <div class="card-header card-header-icon card-header-danger">
             <div class="card-icon">
@@ -16,7 +18,8 @@
           </div>
       </div>
     </a>
-    <a href="{% url 'office_month' %}" class="col-md-6 mt-5 pt-5">
+    {% comment %} <a href="{% url 'creform_rfpgs' %}" class="col-md-6"> {% endcomment %}
+    <a href="{% url url_site|lower|add:'_rfpgs' %}" class="col-md-6">
       <div class="card card-stats hovera">
           <div class="card-header card-header-icon card-header-success">
             <div class="card-icon">
@@ -28,6 +31,7 @@
           </div>
       </div>
     </a>
+    {% endwith %}
   </div>
 </div>
 

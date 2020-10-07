@@ -9,8 +9,8 @@
     </div>
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header card-header-danger">
-          <h4 class="card-title">Edit Sales Amount</h4>
+        <div class="card-header card-header-success">
+          <h4 class="card-title">Edit Rfpgs Data</h4>
         </div>
         <div class="card-body">
           <form method="POST" enctype="multipart/form-data">
@@ -30,8 +30,24 @@
               </div>
               <div class="col-md-8">
                 <div class="form-group">
-                  <label class="bmd-label-floating">Amount</label>
-                  {% render_field form.amount class="form-control" %}
+                  <label class="bmd-label-floating">Issued</label>
+                  {% render_field form.ISSUED class="form-control issued" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Closed</label>
+                  {% render_field form.CLOSED class="form-control closed" max=rfpgs.ISSUED %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Closed With In Target Date</label>
+                  {% render_field form.CLOSED_WITH_IN_TARGET_DATE class="form-control closedot" max=rfpgs.CLOSED %}
                 </div>
               </div>
             </div>
@@ -39,7 +55,7 @@
               <div class="col-md-9">
               </div>
               <div class="col-md-3">
-                <button type="submit" class="btn btn-danger">Update</button>
+                <button type="submit" class="btn btn-success">Update</button>
               </div>
             </div>
           </form>
@@ -55,4 +71,19 @@
 {% endblock content %}
 
 {% block script %}
+
+  $('.issued').change(function() { 
+    $(".closed").attr({
+      "max" : $('.issued').val(),
+      "min" : 0
+    });
+   });
+  $('.closed').change(function() { 
+    $(".closedot").attr({
+      "max" : $('.closed').val(),
+      "min" : 0
+    });
+   });
+
+  
 {% endblock script %}

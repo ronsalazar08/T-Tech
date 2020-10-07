@@ -4,27 +4,39 @@
 
 <div class="container-fluid pt-5 pb-0">
   <div class="row mt-5 pt-5">
-    <a href="{% url 'office_list' %}" class="col-md-6">
+    <a href="{% url 'thc_list' %}" class="col-md-4">
       <div class="card card-stats hovera">
-          <div class="card-header card-header-icon card-header-primary">
+          <div class="card-header card-header-icon card-header-rose">
             <div class="card-icon">
-              <i class="material-icons">people_alt</i>
+              <i class="material-icons">location_city</i>
             </div>
           </div>
           <div class="card-body text-center">
-            <h2 class="card-title">Employee List</h2>
+            <h2 class="card-title">THC</h2>
           </div>
       </div>
     </a>
-    <a href="{% url 'office_month' %}" class="col-md-6">
+    <a href="{% url 'ttech_list' %}" class="col-md-4">
       <div class="card card-stats hovera">
           <div class="card-header card-header-icon card-header-info">
             <div class="card-icon">
-              <i class="material-icons">date_range</i>
+              <i class="material-icons">home_work</i>
             </div>
           </div>
           <div class="card-body text-center">
-            <h2 class="card-title">Monthly Attendance</h2>
+            <h2 class="card-title">T-TECH</h2>
+          </div>
+      </div>
+    </a>
+    <a href="{% url 'ytmi_list' %}" class="col-md-4">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-primary">
+            <div class="card-icon">
+              <i class="material-icons">apartment</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">YTMI</h2>
           </div>
       </div>
     </a>
@@ -50,6 +62,5 @@
 }
 
 </style>
-
 
 {% endblock content %}

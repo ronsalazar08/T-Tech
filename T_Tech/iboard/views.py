@@ -91,7 +91,7 @@ def Display(request, rfid):
 @csrf_exempt  # or comment crsf in setting middleware
 def Reload(request):
     if request.method == "POST":
-        olo = pagestat.objects.get(id=1)
+        olo = office.pagestat.objects.get(id=1)
         oras = timezone.now().strftime("%H:%M:%S")
         emp = office.employee.objects.exclude(status=None)
         if oras > "16:00:00" and oras < "16:30:00" and emp.count() > 0:
