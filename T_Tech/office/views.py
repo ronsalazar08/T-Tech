@@ -75,7 +75,7 @@ class MonthListView(ListView):
     month = timezone.now().strftime("%B").lower()
     model = apps.get_model('office', month)
     template_name = "office/office_month.html"
-    paginate_by = 5
+    paginate_by = 1
     m31 = ['january', 'march', 'may', 'july', 'august', 'october', 'december']
     m30 = ['april', 'june', 'september', 'november']
     m29 = ['february']

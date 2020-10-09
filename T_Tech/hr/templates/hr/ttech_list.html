@@ -45,7 +45,7 @@
                     <td>{{t.g4}}</td>
                     <td class="td-actions text-right">
                       {% with url_site=title %}
-                      <a class="btn btn-info text-light" href="#">
+                      <a class="btn btn-info text-light" href="{% url 'ttech_update' pk=t.pk %}">
                           <i class="material-icons">edit</i>
                       </a>
                       {% endwith %}

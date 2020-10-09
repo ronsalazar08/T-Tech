@@ -17,7 +17,7 @@
                   <tr>
                     <th class="pt-0 pb-0 text-left">Department</th>
                     <th class="pt-0 pb-0">Probationary</th>
-                    <th class="pt-0 pb-0">Regular Shift A</th>
+                    <th class="pt-0 pb-0">Regular</th>
                     <th class="pt-0 pb-0">Male</th>
                     <th class="pt-0 pb-0">Female</th>
                     <th class="pt-0 pb-0">Married</th>
@@ -44,11 +44,9 @@
                     <td>{{t.g3}}</td>
                     <td>{{t.g4}}</td>
                     <td class="td-actions text-right">
-                      {% with url_site=title %}
-                      <a class="btn text-light" style="background-color: #ec407a;" href="#">
+                      <a class="btn text-light" style="background-color: #ec407a;" href="{% url 'thc_update' pk=t.pk %}">
                           <i class="material-icons">edit</i>
                       </a>
-                      {% endwith %}
                     </td>
                   </tr>
                 {% endfor %}

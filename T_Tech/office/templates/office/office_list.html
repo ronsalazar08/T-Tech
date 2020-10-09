@@ -43,21 +43,27 @@
               {% if is_paginated %}
                 <ul class="pagination justify-content-end mr-3">
                   {% if page_obj.has_previous %}
-                    <li class="border-top border-bottom border-left page-item rounded-left"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.previous_page_number }}">&laquo; PREVIOUS</a></li>
+                    <li class="border-top border-bottom page-item border-left rounded-left"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
                   {% else %}
-                    <li class="border-top border-bottom border-left page-item page-link disabled rounded-left" style="color: grey; pointer-events: none;"><span>&laquo; PREVIOUS</span></li>
+                    <li class="border-top border-bottom page-item border-left rounded-left page-link disabled"</li>
+                  {% endif %}
+                  {% if page_obj.number|add:'-3' > 1 %}
+                    <li class="border-top border-bottom page-item"  ><a class="page-link rounded" style="color: #9C27B0;" href="?page={{ page_obj.number|add:'-3' }}">&hellip;</a></li>
                   {% endif %}
                   {% for i in paginator.page_range %}
                     {% if page_obj.number == i %}
-                      <li class="border-top border-bottom page-item page-link rounded-circle text-light" style="background-color: #9C27B0;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                    {% else %}
-                      <li class="border-top border-bottom page-item"><a class="page-link rounded-circle" style="color: #9C27B0;" href="?page={{ i }}">{{ i }}</a></li>
+                      <li class="border-top border-bottom page-item page-link rounded text-light" style="background-color: #9C27B0;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded" style="color: #9C27B0;" href="?page={{ i }}">{{ i }}</a></li>
                     {% endif %}
                   {% endfor %}
+                  {% if page_obj.paginator.num_pages > page_obj.number|add:'3' %}
+                    <li class="border-top border-bottom page-item" ><a class="page-link rounded" style="color: #9C27B0;" href="?page={{ page_obj.number|add:'3' }}">&hellip;</a></li>
+                  {% endif %}
                   {% if page_obj.has_next %}
-                    <li class="border-top border-bottom border-right page-item rounded-right"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.next_page_number }}">NEXT &raquo;</a></li>
+                    <li class="border-top border-bottom page-item border-right rounded-right"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
                   {% else %}
-                    <li class="border-top border-bottom border-right page-item page-link disabled rounded-right" style="color: grey; pointer-events: none;"><span>NEXT &raquo;</span></li>
+                    <li class="border-top border-bottom page-item border-right rounded-right page-link disabled"></li>
                   {% endif %}
                 </ul>
               {% endif %}
