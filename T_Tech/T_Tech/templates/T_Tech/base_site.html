@@ -30,7 +30,6 @@ The above copyright notice and this permission notice shall be included in all c
   
   <link href="{% static 'T_Tech/logo_animation.css' %}" rel="stylesheet">
 </head>
-
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="{% static 'T_Tech/assets_material/img/sidebar-3.jpg' %}">
@@ -92,7 +91,8 @@ The above copyright notice and this permission notice shall be included in all c
           {% endif %}
           {% if 'CONTRACTOR' in lista %}
             <li class="nav-item {% if title == 'CONTRACTOR' %}active{% endif %}">
-              <a class="nav-link" href="./map.html">
+              <a class="nav-link" href="{% url 'contractor' %}">
+              {% comment %} <a class="nav-link" href="{% url 'admin:index' %}"> {% endcomment %}
                 <i class="material-icons">perm_identity</i>
                 <p>CONTRACTOR</p>
               </a>

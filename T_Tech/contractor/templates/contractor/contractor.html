@@ -1,0 +1,81 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+
+<div class="container-fluid pt-5 pb-0">
+  <div class="row">
+    <a href="{% url 'contractor_list' %}" class="col-md-6">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-primary">
+            <div class="card-icon">
+              <i class="material-icons">people_alt</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">Employee List</h2>
+          </div>
+      </div>
+    </a>
+    <a href="{% url 'contractor_logbox' %}?search=" class="col-md-6">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-danger">
+            <div class="card-icon">
+              <i class="material-icons">fingerprint</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">Logbox</h2>
+          </div>
+      </div>
+    </a>
+  </div>
+  <div class="row">
+    <a href="{% url 'admin:index' %}" class="col-md-6">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-info">
+            <div class="card-icon">
+              <i class="material-icons">date_range</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">Weekly Attendance</h2>
+          </div>
+      </div>
+    </a>
+    <a href="{% url 'admin:index' %}" class="col-md-6">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-warning">
+            <div class="card-icon">
+              <i class="material-icons">receipt</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">Forms</h2>
+          </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<style>
+.hovera:hover{
+  box-shadow:0px 0px 100px 0px gray;
+  {% comment %} background-color: rgb(255,255,255, .5); {% endcomment %}
+  transform: translate(0, -5px);
+  
+    -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+
+    -webkit-transition: transform 1.05s ease-in-out;
+    -moz-transition:transform 1.05s ease-in-out;
+    -ms-transition:transform 1.05s ease-in-out;
+}
+
+</style>
+
+
+{% endblock content %}

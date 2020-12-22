@@ -1,8 +1,162 @@
+from django.apps import apps
+from django.db.models import Q
+from django.contrib import messages
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import Permission
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import TemplateView, ListView, UpdateView, CreateView, DeleteView
+
 from .models import *
 from django.utils import timezone
 import datetime
+
+
+def permitted_apps(usera):
+    """
+    Returning list of allowed apps for current user
+    """
+    if str(usera) == 'admin':
+        permissions = Permission.objects.all()
+    else:
+        permissions = Permission.objects.filter(user=usera)
+    lista = list(set([((str(p).split())[0]).upper() for p in permissions]))
+    lista.sort()
+    return lista
+
+
+#============================================================ DASH PAGE
+
+
+class ContractorView(TemplateView):
+    template_name = "contractor/contractor.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'title' : 'CONTRACTOR',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+
+
+class ContractorEmployeeListView(ListView):
+    model = employee
+    template_name = 'contractor/contractor_list.html'  # Default: <app_label>/<model_name>_list.html
+    context_object_name = 'employees'  # Default: object_list
+    paginate_by = 5
+    # queryset = employee.objects.all().filter(company='BLAIRWIN')  # Default: Model.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(ContractorEmployeeListView, self).get_context_data(**kwargs)
+        context.update({
+            'title' : 'CONTRACTOR',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+    def get_queryset(self, **kwargs):
+        company_name = self.request.user
+        if str(company_name) == 'admin':
+            queryset = employee.objects.all().order_by('lastname')
+        else:
+            queryset = employee.objects.all().filter(company=str(company_name).upper()).order_by('lastname')
+        return queryset
+
+
+class ContractorEmployeeCreateView(SuccessMessageMixin, CreateView):
+    model = employee
+    template_name = 'contractor/contractor_add.html'
+    context_object_name = 'employee'
+    success_message = '<strong>%(firstname)s\'s</strong> Profile Successfully Created!'
+    fields = ('id_number', 'firstname', 'middlename', 'lastname', 'position', 'company', 'shift', 'picture', 'status')
+    
+    def get_context_data(self, **kwargs):
+        context = super(ContractorEmployeeCreateView, self).get_context_data(**kwargs)
+        context.update({
+            'title' : 'CONTRACTOR',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('contractor_list')
+        # return reverse_lazy('book-detail', kwargs={'pk': self.object.id})
+
+
+class ContractorEmployeeUpdateView(SuccessMessageMixin, UpdateView):
+    model = employee
+    template_name = 'contractor/contractor_employee.html'
+    context_object_name = 'employee'
+    success_message = '<strong>%(firstname)s\'s</strong> Profile is now Updated!'
+    fields = ('id_number', 'firstname', 'middlename', 'lastname', 'position', 'company', 'shift', 'picture', 'status')
+
+
+    def get_context_data(self, **kwargs):
+        context = super(ContractorEmployeeUpdateView, self).get_context_data(**kwargs)
+        context.update({
+            'title' : 'CONTRACTOR',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('contractor_list')
+        # return reverse_lazy('book-detail', kwargs={'pk': self.object.id})
+
+
+class ContractorEmployeeDeleteView(DeleteView):
+    model = employee
+    template_name = 'contractor/contractor_delete.html'
+    context_object_name = 'employee'
+    success_message = '<strong>Employee</strong> Profile is now Deleted!'
+
+    def get_context_data(self, **kwargs):
+        context = super(ContractorEmployeeDeleteView, self).get_context_data(**kwargs)
+        context.update({
+            'title' : 'CONTRACTOR',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+    
+    def get_success_url(self):
+        return reverse_lazy('contractor_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(ContractorEmployeeDeleteView, self).delete(request, *args, **kwargs)
+
+
+class ContractorLogboxListView(ListView):
+    model = logbox
+    template_name = 'contractor/contractor_logbox.html'  # Default: <app_label>/<model_name>_list.html
+    context_object_name = 'logbox'  # Default: object_list
+    paginate_by = 5
+    # queryset = logbox.objects.all().order_by("-date_time")# Default: Model.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'title' : 'CONTRACTOR',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
+
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        object_list = self.model.objects.all().order_by("-date_time")
+        if search:
+            object_list = object_list.filter(Q(employee__lastname__contains=search.upper()) | Q(employee__firstname__contains=search.upper()) | Q(date_time__contains=search)).order_by("-date_time")
+            messages.success(self.request, f'Displaying "{search.upper()}"')
+            if len(object_list) == 0:
+                object_list = self.model.objects.all().order_by("-date_time")
+                messages.success(self.request, f'Cannot find "{search.upper()}"')
+        
+        return object_list
+
+#=====================================================================ADMIN PAGE
+
 
 @login_required(login_url='/admin') 
 def record_per_employee(request, tid):
@@ -281,3 +435,5 @@ def week_record(start_day, current_user, shift):
         final_listahan.append([day_holder, ot_holder])
 
     return query, petsa, final_listahan
+
+
