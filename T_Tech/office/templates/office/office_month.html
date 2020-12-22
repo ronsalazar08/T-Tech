@@ -1,0 +1,128 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+
+  <div class="container-fluid  pb-0">
+    <div class="row pb-0 mb-0">
+      <div class="col-md-12 pb-0 mb-0">
+        <div class="card pb-0 mb-0">
+          <div class="card-header card-header-info">
+            <h4 class="card-title ">{% now "F" as month %}{{month|upper}}</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="table-office-month" class="table-hover w-100">
+                <thead class=" text-info border-bottom">
+                  <tr>
+                    <th style="width:25% !important;">NAME</th>
+                    {% for c in count %}
+                      <th class="text-center p-1 pt-2">{{ forloop.counter }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody>
+                {% for m in monsq %}
+                  <tr class="border-bottom">
+                    {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+                    <td class="p-1 pt-2" style="width:25% !important;">{{m}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d1|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d2|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d3|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d4|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d5|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d6|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d7|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d8|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d9|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d10|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d11|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d12|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d13|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d14|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d15|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d16|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d17|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d18|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d19|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d20|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d21|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d22|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d23|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d24|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d25|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d26|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d27|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d28|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d29|default_if_none:""}}</td>
+                    {% if cnt == 30 %}
+                    <td class="p-1 pt-2 dd">{{m.d30|default_if_none:""}}</td>
+                    {% elif cnt == 31 %}
+                    <td class="p-1 pt-2 dd">{{m.d30|default_if_none:""}}</td>
+                    <td class="p-1 pt-2 dd">{{m.d31|default_if_none:""}}</td>
+                    {% endif %}
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <br>
+              <nav aria-label="Page navigation example">
+              {% if is_paginated %}
+                <ul class="pagination justify-content-end mr-3">
+                  {% if page_obj.has_previous %}
+                    <li class="border-top border-bottom page-item border-left rounded-left"><a class="page-link" style="color: #00bcd4;" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-left rounded-left page-link disabled"</li>
+                  {% endif %}
+                  {% if page_obj.number|add:'-3' > 1 %}
+                    <li class="border-top border-bottom page-item"  ><a class="page-link rounded" style="color: #00bcd4;" href="?page={{ page_obj.number|add:'-3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                      <li class="border-top border-bottom page-item page-link rounded text-light" style="background-color: #00bcd4;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded" style="color: #00bcd4;" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.paginator.num_pages > page_obj.number|add:'3' %}
+                    <li class="border-top border-bottom page-item" ><a class="page-link rounded" style="color: #00bcd4;" href="?page={{ page_obj.number|add:'3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% if page_obj.has_next %}
+                    <li class="border-top border-bottom page-item border-right rounded-right"><a class="page-link" style="color: #00bcd4;" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-right rounded-right page-link disabled"></li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <style>
+  </style>
+
+  <script>
+  </script>
+
+{% endblock content %}
+
+{% block script %}
+
+    $('#table-office-month tbody tr').each(function () {
+      $(this).find('.dd').each(function () {
+          var valu = $(this).text();
+          if (valu == 'A'){
+              $(this).html('&#10007;');
+              $(this).css('color','Red');
+          } else if (valu == 'P'){
+              $(this).html('&#10003;');
+              $(this).css('color','LimeGreen');
+          }
+      });
+    });
+
+{% endblock script %}

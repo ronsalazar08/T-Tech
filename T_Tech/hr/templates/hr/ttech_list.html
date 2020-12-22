@@ -1,0 +1,72 @@
+{% extends 'T_Tech/base_site.html' %}
+{% load humanize %}
+
+{% block content %}
+
+  <div class="container-fluid  pb-0">
+    <div class="row pb-0 mb-0">
+      <div class="col-md-12 pb-0 mb-0">
+        <div class="card pb-0 mb-0">
+          <div class="card-header card-header-info">
+            <h4 class="card-title ">TTECH Data</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover text-center">
+                <thead class=" text-info">
+                  <tr>
+                    <th class="pt-0 pb-0 text-left">Department</th>
+                    <th class="pt-0 pb-0">Probationary</th>
+                    <th class="pt-0 pb-0">Regular</th>
+                    <th class="pt-0 pb-0">Male</th>
+                    <th class="pt-0 pb-0">Female</th>
+                    <th class="pt-0 pb-0">Married</th>
+                    <th class="pt-0 pb-0">Single</th>
+                    <th class="pt-0 pb-0">G1</th>
+                    <th class="pt-0 pb-0">G2</th>
+                    <th class="pt-0 pb-0">G3</th>
+                    <th class="pt-0 pb-0">G4</th>
+                    <th class="pt-0 pb-0"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for t in ttech %}
+                  <tr>
+                    <td class="font-weight-bold text-left">{{t.name}}</td>
+                    <td>{{t.probationary}}</td>
+                    <td>{{t.regular}}</td>
+                    <td>{{t.male}}</td>
+                    <td>{{t.female}}</td>
+                    <td>{{t.married}}</td>
+                    <td>{{t.single}}</td>
+                    <td>{{t.g1}}</td>
+                    <td>{{t.g2}}</td>
+                    <td>{{t.g3}}</td>
+                    <td>{{t.g4}}</td>
+                    <td class="td-actions text-right">
+                      {% with url_site=title %}
+                      <a class="btn btn-info text-light" href="{% url 'ttech_update' pk=t.pk %}">
+                          <i class="material-icons">edit</i>
+                      </a>
+                      {% endwith %}
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+{% endblock content %}
+
+
+{% block script %}
+
+{% endblock script %}

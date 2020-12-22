@@ -1,0 +1,86 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+
+  <div class="container-fluid  pb-0">
+    <div class="row pb-0 mb-0">
+      <div class="col-md-12 pb-0 mb-0">
+        <div class="card pb-0 mb-0">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">List of Employees</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class=" text-primary">
+                  <tr>
+                    <th class="pt-0 pb-0">Name</th>
+                    <th class="pt-0 pb-0">Position</th>
+                    <th class="pt-0 pb-0">Birthday</th>
+                    <th class="pt-0 pb-0">Status</th>
+                    <th class="pt-0 pb-0">RFID</th>
+                    <th class="pt-0 pb-0"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for emp in employees %}
+                  <tr>
+                    <td>{{emp}}</td>
+                    <td>{{emp.position}}</td>
+                    <td>{{emp.birthday|date:"M - d"}}</td>
+                    <td>{{emp.get_status_display|default_if_none:""}}</td>
+                    <td>{{emp.rfid}}</td>
+                    <td class="td-actions text-right">
+                      <a class="btn btn-primary text-light" href="{% url 'employee_update' pk=emp.pk %}">
+                          <i class="material-icons">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation example">
+              {% if is_paginated %}
+                <ul class="pagination justify-content-end mr-3">
+                  {% if page_obj.has_previous %}
+                    <li class="border-top border-bottom page-item border-left rounded-left"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-left rounded-left page-link disabled"</li>
+                  {% endif %}
+                  {% if page_obj.number|add:'-3' > 1 %}
+                    <li class="border-top border-bottom page-item"  ><a class="page-link rounded" style="color: #9C27B0;" href="?page={{ page_obj.number|add:'-3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                      <li class="border-top border-bottom page-item page-link rounded text-light" style="background-color: #9C27B0;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded" style="color: #9C27B0;" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.paginator.num_pages > page_obj.number|add:'3' %}
+                    <li class="border-top border-bottom page-item" ><a class="page-link rounded" style="color: #9C27B0;" href="?page={{ page_obj.number|add:'3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% if page_obj.has_next %}
+                    <li class="border-top border-bottom page-item border-right rounded-right"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-right rounded-right page-link disabled"></li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+{% endblock content %}
+
+
+{% block script %}
+
+{% endblock script %}

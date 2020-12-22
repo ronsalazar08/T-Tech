@@ -1,0 +1,127 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+  <style>
+    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    white;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color:    white;
+      opacity:  1;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color:    white;
+      opacity:  1;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color:    white;
+    }
+    ::-ms-input-placeholder { /* Microsoft Edge */
+      color:    white;
+    }
+
+    ::placeholder { /* Most modern browsers support this now. */
+      color:    white;
+    }
+  </style>
+
+  <div class="container-fluid  pb-0">
+    <div class="row pb-0 mb-0">
+      <div class="col-md-12 pb-0 mb-0">
+        <div class="card pb-0 mb-0">
+          <div class="card-header card-header-info">
+            <h4 class="card-title w-50">Logbox</h4>
+            <form method="GET">
+                  <input id="search" name="search" type="text" placeholder="Search.." class="border-bottom text-light w-25" style="border: 0; background: none; position:absolute; top:15px; right:20px;" >
+                  {% comment %} <input type="submit" class="btn btn-white pt-1 pb-1" value="Search" style="position:absolute; top:15px; left:320px;"> {% endcomment %}
+            </form>
+            {% comment %} <a class="btn btn-secondary p-2" style="position:absolute; top:7px; right:10px;" href="">
+              <i class="material-icons">note_add</i> &nbsp;&nbsp; Add Transaction
+            </a> {% endcomment %}
+          </div>
+          <div class="card-body">
+            
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class=" text-info">
+                  <tr>
+                  </tr>
+                  <tr style="height: 3em;">
+                    <th class="pt-0 pb-0">Employee</th>
+                    <th class="pt-0 pb-0">Date Time</th>
+                    <th class="pt-0 pb-0">Transaction</th>
+                    <th class="pt-0 pb-0">Shift</th>
+                    <th class="pt-0 pb-0"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for log in logbox %}
+                  <tr>
+                    <td>{{log}}</td>
+                    <td>{{log.date_time}}</td>
+                    <td>{{log.transaction}}</td>
+                    <td>{{log.shift}}</td>
+                    <td class="td-actions text-right">
+                      <a class="btn btn-info text-light" href="">
+                          <i class="material-icons">edit</i>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation example">
+              <a class="btn btn-info p-2 float-left" href="">
+                <i class="material-icons">note_add</i> &nbsp;&nbsp; Add Transaction
+              </a>
+              {% if is_paginated %}
+                <ul class="pagination justify-content-end mr-3">
+                  {% if page_obj.has_previous %}
+                    <li class="border-top border-bottom page-item border-left rounded-left"><a class="page-link text-info" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-left rounded-left page-link disabled"</li>
+                  {% endif %}
+                  {% if page_obj.number|add:'-3' > 1 %}
+                    <li class="border-top border-bottom page-item"  ><a class="page-link rounded text-info" href="?page={{ page_obj.number|add:'-3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                      <li class="border-top border-bottom page-item page-link rounded text-light bg-info"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded text-info" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.paginator.num_pages > page_obj.number|add:'3' %}
+                    <li class="border-top border-bottom page-item" ><a class="page-link rounded text-info" href="?page={{ page_obj.number|add:'3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% if page_obj.has_next %}
+                    <li class="border-top border-bottom page-item border-right rounded-right"><a class="page-link text-info" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-right rounded-right page-link disabled"></li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+{% endblock content %}
+
+
+{% block script %}
+
+  {% comment %} $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".table tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  }); {% endcomment %}
+
+{% endblock script %}

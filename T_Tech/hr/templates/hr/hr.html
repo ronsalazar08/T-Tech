@@ -1,0 +1,66 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+
+<div class="container-fluid pt-5 pb-0">
+  <div class="row mt-5 pt-5">
+    <a href="{% url 'thc_list' %}" class="col-md-4">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">location_city</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">THC</h2>
+          </div>
+      </div>
+    </a>
+    <a href="{% url 'ttech_list' %}" class="col-md-4">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-info">
+            <div class="card-icon">
+              <i class="material-icons">home_work</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">T-TECH</h2>
+          </div>
+      </div>
+    </a>
+    <a href="{% url 'ytmi_list' %}" class="col-md-4">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-primary">
+            <div class="card-icon">
+              <i class="material-icons">apartment</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">YTMI</h2>
+          </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<style>
+.hovera:hover{
+  box-shadow:0px 0px 100px 0px gray;
+  {% comment %} background-color: rgb(255,255,255, .5); {% endcomment %}
+  transform: translate(0, -5px);
+  
+    -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+
+    -webkit-transition: transform 1.05s ease-in-out;
+    -moz-transition:transform 1.05s ease-in-out;
+    -ms-transition:transform 1.05s ease-in-out;
+}
+
+</style>
+
+{% endblock content %}

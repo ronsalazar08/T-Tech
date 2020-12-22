@@ -13,7 +13,7 @@ SECRET_KEY = 'kgb@sk=_wv-47etv3l+n+gv%t*qi_+by)wd6oebg%e_kems6u@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.44.2.161']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.44.2.159', '10.44.1.228']
 
 
 # Application definition
@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'admin_reorder',
     'crispy_forms',
     'widget_tweaks',
@@ -36,7 +37,6 @@ INSTALLED_APPS = [
     'rbf',
     'hr',
     'iboard',
-    'home',
 ]
 
 MIDDLEWARE = [
@@ -139,8 +139,9 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = '/home/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
 
 ADMIN_REORDER = (
     # Keep original label and models

@@ -24,7 +24,7 @@
             </table>
         </div>
         <div class="col-6 p-0 pr-2">
-            <center><div class="font-weight-bolder" style="font-size: 18px;">{{month}}</div></center>
+            <center><div class="font-weight-bolder" style="font-size: 18px;">{% now "F" as month %}{{month|upper}}</div></center>
             <div class=" w-100 mb-4" style=" height:580px;">
                 <table id="tablea" class="shadow p-0 mx-auto h-100" style="font-size:8px;">
                     <thead >
@@ -34,7 +34,6 @@
                             {% for c in count %}
                                 <th class="text-center">{{ forloop.counter }}</th>
                             {% endfor %}
-                            {% comment %} <th class="text-center">L</th> {% endcomment %}
                             <th class="text-center">A</th>
                         </tr>
                     </thead>
@@ -73,12 +72,11 @@
                                 <td class="dd text-center" style="font-size: 11px;">{{m.d28|default_if_none:""}}</td>
                                 <td class="dd text-center" style="font-size: 11px;">{{m.d29|default_if_none:""}}</td>
                                 {% if cnt == 30 %}
-                                <td class="dd pl-1 text-center" style="font-size: 11px;">{{m.d30}}</td>
+                                <td class="dd pl-1 text-center" style="font-size: 11px;">{{m.d30|default_if_none:""}}</td>
                                 {% elif cnt == 31 %}
-                                <td class="dd pl-1">{{m.d30}}</td>
-                                <td class="dd pl-1">{{m.d31}}</td>
+                                <td class="dd pl-1">{{m.d30|default_if_none:""}}</td>
+                                <td class="dd pl-1">{{m.d31|default_if_none:""}}</td>
                                 {% endif %}
-                                {% comment %} <td style="width: 20px; padding-left:5px; padding-right:5px; text-align: center; font-weight: bolder;" class="Ltot"></td> {% endcomment %}
                                 <td style="width: 20px; padding-left:5px; padding-right:5px; text-align: center; font-weight: bolder;" class="Atot"></td>
                             </tr>
                         {% endfor %}
@@ -89,7 +87,6 @@
                 <b style="color:LimeGreen;">&#11044;</b> PRESENT &emsp;&emsp; <b style="color:red;">&#11044;</b> ABSENT
             </div>
             <div class="w-100 mt-1 text-center font-weight-bold mb-2" style="border: solid 2px #292b2c; border-radius: 12px; overflow:hidden; height:170px; text-align: center; display: flex; justify-content: center; align-items: center;">
-                <!--<iframe id="myIframe" name="myIframe" src=""  frameBorder: 0; scrolling="no" ></iframe>-->
                 <span id="info_div" style="font-size: 72px; font-weight: bold;"></span>OF EMPLOYEES ARE PRESENT
             </div>
             <div >
@@ -115,10 +112,6 @@
                     p += 1;
                     $(this).find(':nth-child(1)').html('&#11044;');
                     $(this).find(':nth-child(1)').css('color','LimeGreen');
-                } else if (status == "L") {
-                    p += 1;
-                    $(this).find(':nth-child(1)').html('&#11044;');
-                    $(this).find(':nth-child(1)').css('color','Yellow');
                 } else {
                     $(this).find(':nth-child(1)').html('&#11044;');
                     $(this).find(':nth-child(1)').css('color','Red');
@@ -134,10 +127,6 @@
                         Atot += 1;
                         $(this).html('&#11044;');
                         $(this).css('color','Red');
-                    {% comment %} } else if (valu == 'L'){
-                        Ltot += 1;
-                        $(this).html('&#11044;');
-                        $(this).css('color','Yellow'); {% endcomment %}
                     } else if (valu == 'P'){
                         $(this).html('&#11044;');
                         $(this).css('color','LimeGreen');
@@ -152,12 +141,10 @@
                     $('.Ltot', this).html(Ltot);
                 }
             });
-            percent = parseFloat(p/{{counta}} * 100).toFixed(0);
+            percent = parseFloat(p/{{emps.count}} * 100).toFixed(0);
             $('#info_div').text(percent + '%');
             
-            {% comment %} if ({{hour}} <= 11){
-                ajaxa();
-            } {% endcomment %}
+            
             ajaxa();
             startTime();
         });
@@ -240,15 +227,5 @@
 			if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
 			return i;
 		}
-
-        {% comment %} var frames = Array('http://localhost:8000/kanban/list', 25, 'http://localhost:2000/month', 25);
-		var i = 0, len = frames.length;
-		function ChangeSrc()
-			{
-			if (i >= len) { i = 0; } // start over
-			  //document.getElementById('myIframe').src = frames[i++];
-			  windows.location.href = frames[i++];
-              setTimeout('ChangeSrc()', (frames[i++]*1000));
-			} {% endcomment %}
     </script>
 {% endblock content %}

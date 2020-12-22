@@ -1,0 +1,84 @@
+{% extends 'T_Tech/base_site.html' %}
+{% load humanize %}
+{% load subt %}
+{% block content %}
+
+  <div class="container-fluid  pb-0">
+    <div class="row pb-0 mb-0">
+      <div class="col-md-12 pb-0 mb-0">
+        <div class="card pb-0 mb-0">
+          <div class="card-header card-header-success">
+            <h4 class="card-title ">RFPGS</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover ">
+                <thead class=" text-success">
+                  <tr>
+                    <th class="pt-0 pb-0">Month</th>
+                    <th class="pt-0 pb-0">Issued</th>
+                    <th class="pt-0 pb-0">Open</th>
+                    <th class="pt-0 pb-0">Closed</th>
+                    <th class="pt-0 pb-0">On Target</th>
+                    <th class="pt-0 pb-0"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for rfpg in rfpgs %}
+                  <tr>
+                    <td class="font-weight-bold">{{rfpg.name}}</td>
+                    <td>{{rfpg.ISSUED}}</td>
+                    <td>{{rfpg.ISSUED|subt:rfpg.CLOSED}}</td>
+                    <td>{{rfpg.CLOSED}}</td>
+                    <td>{{rfpg.CLOSED_WITH_IN_TARGET_DATE}}</td>
+                    <td class="td-actions text-right">
+                      {% with url_site=title %}
+                      <a class="btn btn-success text-light" href="{% url url_site|lower|add:'_rfpgs_update' pk=rfpg.pk%}">
+                          <i class="material-icons">edit</i>
+                      </a>
+                      {% endwith %}
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation example">
+              {% if is_paginated %}
+                <ul class="pagination justify-content-end mr-3">
+                  {% if page_obj.has_previous %}
+                    <li class="border-top border-bottom page-item border-left rounded-left"><a class="page-link" style="color: #4caf50;" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-left rounded-left page-link disabled"</li>
+                  {% endif %}
+                  {% if page_obj.number|add:'-3' > 1 %}
+                    <li class="border-top border-bottom page-item"  ><a class="page-link rounded" style="color: #4caf50;" href="?page={{ page_obj.number|add:'-3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                      <li class="border-top border-bottom page-item page-link rounded text-light" style="background-color: #4caf50;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% elif i > page_obj.number|add:'-4' and i < page_obj.number|add:'4' %}
+                      <li class="border-top border-bottom page-item"><a class="page-link rounded" style="color: #4caf50;" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.paginator.num_pages > page_obj.number|add:'3' %}
+                    <li class="border-top border-bottom page-item" ><a class="page-link rounded" style="color: #4caf50;" href="?page={{ page_obj.number|add:'3' }}">&hellip;</a></li>
+                  {% endif %}
+                  {% if page_obj.has_next %}
+                    <li class="border-top border-bottom page-item border-right rounded-right"><a class="page-link" style="color: #4caf50;" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                  {% else %}
+                    <li class="border-top border-bottom page-item border-right rounded-right page-link disabled"></li>
+                  {% endif %}
+                </ul>
+              {% endif %}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+{% endblock content %}

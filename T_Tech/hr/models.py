@@ -59,7 +59,7 @@ class YTMI(models.Model):
 
 class AS_OF(models.Model):
     name = models.CharField(max_length=50)
-    date_modified = models.DateField(auto_now=False, null=True)
+    date_modified = models.DateTimeField(auto_now=False, null=True)
 
     def __str__(self):
         return self.name

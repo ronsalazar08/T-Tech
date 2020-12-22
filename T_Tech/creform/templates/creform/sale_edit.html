@@ -1,0 +1,58 @@
+{% extends 'T_Tech/base_site.html' %}
+{% load widget_tweaks %} 
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row mt-5 pt-5">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">Edit Sales Amount</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="row">
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Month</label>
+                  {% render_field form.name class="form-control" readonly="readonly" style="background-color: inherit;" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Amount</label>
+                  {% render_field form.amount class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-9">
+              </div>
+              <div class="col-md-3">
+                <button type="submit" class="btn btn-danger">Update</button>
+              </div>
+            </div>
+          </form>
+            <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

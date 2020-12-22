@@ -1,0 +1,134 @@
+{% extends 'T_Tech/base_site.html' %}
+{% load widget_tweaks %} 
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">New Profile</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="row">
+              <div class="col-md-2">
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Id Number</label>
+                  {% render_field form.id_number class="form-control"  %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Company</label>
+                  {% render_field form.company class="form-control" value=user.get_username|upper  %}
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">First Name</label>
+                  {% render_field form.firstname class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Middle Name</label>
+                  {% render_field form.middlename class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Last Name</label>
+                  {% render_field form.lastname class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+              </div>
+              <div class="col-md-8">
+                <div class="form-groupa">
+                  <label class="bmd-label-floating" style="font-size:0.6875rem;">Picture</label><br>
+                  {% render_field form.picture class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating" style="font-size:0.6875rem;">Position</label><br>
+                  {% render_field form.position class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating" style="font-size:0.6875rem;">Shift</label><br>
+                  {% render_field form.shift class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group"  >
+                  <label class="bmd-label-floating" style="font-size:0.6875rem;">Status</label><br>
+                  {% render_field form.status class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-9">
+              </div>
+              <div class="col-md-3">
+                <button type="submit" class="btn btn-danger btn-block">Create Profile</button>
+              </div>
+            </div>
+          </form>
+            <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+  {% comment %} .statusSelect{
+    width: 8em;
+    padding: .3em;
+    outline: 0;
+    border: 0;
+    background-color: inherit;
+    border-bottom: 2px solid #9c27b0;
+  } {% endcomment %}
+  {% comment %} .statusSelect::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #purple;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+  }
+  /* Transition */
+  .statusSelect:hover::after {
+    color: black;
+  } {% endcomment %}
+</style>
+{% endblock content %}
+
+{% block script %}
+
+  $('.form-groupa').contents().filter(function(){
+      return this.nodeType === 3;
+  }).remove();
+
+{% endblock script %}

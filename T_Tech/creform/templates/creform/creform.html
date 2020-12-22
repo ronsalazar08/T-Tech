@@ -1,0 +1,58 @@
+{% extends 'T_Tech/base_site.html' %}
+
+{% block content %}
+
+<div class="container-fluid pt-5 pb-0">
+  <div class="row mt-5 pt-5">
+    {% with url_site=title %}
+    {% comment %} <a href="{% url 'creform_sales' %}" class="col-md-6"> {% endcomment %}
+    <a href="{% url url_site|lower|add:'_sales' %}" class="col-md-6">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-danger">
+            <div class="card-icon">
+              <i class="material-icons">insights</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">SALES</h2>
+          </div>
+      </div>
+    </a>
+    {% comment %} <a href="{% url 'creform_rfpgs' %}" class="col-md-6"> {% endcomment %}
+    <a href="{% url url_site|lower|add:'_rfpgs' %}" class="col-md-6">
+      <div class="card card-stats hovera">
+          <div class="card-header card-header-icon card-header-success">
+            <div class="card-icon">
+              <i class="material-icons">bar_chart</i>
+            </div>
+          </div>
+          <div class="card-body text-center">
+            <h2 class="card-title">RFPGS</h2>
+          </div>
+      </div>
+    </a>
+    {% endwith %}
+  </div>
+</div>
+
+<style>
+.hovera:hover{
+  box-shadow:0px 0px 100px 0px gray;
+  {% comment %} background-color: rgb(255,255,255, .5); {% endcomment %}
+  transform: translate(0, -5px);
+  
+    -moz-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+
+    -webkit-transition: transform 1.05s ease-in-out;
+    -moz-transition:transform 1.05s ease-in-out;
+    -ms-transition:transform 1.05s ease-in-out;
+}
+
+</style>
+
+{% endblock content %}

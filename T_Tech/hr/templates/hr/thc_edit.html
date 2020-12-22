@@ -1,0 +1,124 @@
+{% extends 'T_Tech/base_site.html' %}
+{% load widget_tweaks %} 
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header card-header-rose">
+          <h4 class="card-title">Edit THC Data</h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+            <div class="row">
+              <div class="col-md-2">
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="bmd-label-floating ">Department</label>
+                  {% render_field form.name class="form-control text-center" readonly="readonly" style="background-color: inherit;" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Probationary</label>
+                  {% render_field form.probationary class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Regular</label>
+                  {% render_field form.regular class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Male</label>
+                  {% render_field form.male class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Female</label>
+                  {% render_field form.female class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1">
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Married</label>
+                  {% render_field form.married class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Single</label>
+                  {% render_field form.single class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">G1</label>
+                  {% render_field form.g1 class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">G2</label>
+                  {% render_field form.g2 class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">G3</label>
+                  {% render_field form.g3 class="form-control" %}
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">G4</label>
+                  {% render_field form.g4 class="form-control" %}
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-9">
+              </div>
+              <div class="col-md-3">
+                <button type="submit" class="btn text-light" style="background-color: #ec407a;">Update</button>
+              </div>
+            </div>
+          </form>
+            <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
