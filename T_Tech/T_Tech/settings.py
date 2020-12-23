@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'rest_framework',
+    'corsheaders',
     'admin_reorder',
     'crispy_forms',
     'widget_tweaks',
@@ -37,11 +39,13 @@ INSTALLED_APPS = [
     'rbf',
     'hr',
     'iboard',
+    'api',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -49,6 +53,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'admin_reorder.middleware.ModelAdminReorder',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'T_Tech.urls'
 
@@ -126,6 +132,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = False
+
+
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -206,3 +215,8 @@ ADMIN_REORDER = (
                     'contractor.december',
         )},
 )
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+#     'PAGE_SIZE': 20
+# }

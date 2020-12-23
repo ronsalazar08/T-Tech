@@ -4,7 +4,7 @@
 
 <div class="container-fluid pt-5 pb-0">
   <div class="row">
-    <a href="{% url 'contractor_list' %}" class="col-md-6">
+    <a href="{% url 'admin:index' %}contractor/curweek/" class="col-md-6">
       <div class="card card-stats hovera">
           <div class="card-header card-header-icon card-header-primary">
             <div class="card-icon">
@@ -12,11 +12,11 @@
             </div>
           </div>
           <div class="card-body text-center">
-            <h2 class="card-title">Employee List</h2>
+            <h2 class="card-title">Current Week__DS</h2>
           </div>
       </div>
     </a>
-    <a href="{% url 'contractor_logbox' %}" class="col-md-6">
+    <a href="{% url 'admin:index' %}contractor/curweekns/" class="col-md-6">
       <div class="card card-stats hovera">
           <div class="card-header card-header-icon card-header-danger">
             <div class="card-icon">
@@ -24,13 +24,13 @@
             </div>
           </div>
           <div class="card-body text-center">
-            <h2 class="card-title">Logbox</h2>
+            <h2 class="card-title">Current Week__NS</h2>
           </div>
       </div>
     </a>
   </div>
   <div class="row">
-    <a href="{% url 'contractor_schedule' %}" class="col-md-6">
+    <a href="{% url 'admin:index' %}contractor/lasweek/" class="col-md-6">
       <div class="card card-stats hovera">
           <div class="card-header card-header-icon card-header-info">
             <div class="card-icon">
@@ -38,11 +38,11 @@
             </div>
           </div>
           <div class="card-body text-center">
-            <h2 class="card-title">Weekly Attendance</h2>
+            <h2 class="card-title">Last Week__DS</h2>
           </div>
       </div>
     </a>
-    <a href="{% url 'admin:index' %}" class="col-md-6">
+    <a href="{% url 'admin:index' %}contractor/lasweekns/" class="col-md-6">
       <div class="card card-stats hovera">
           <div class="card-header card-header-icon card-header-warning">
             <div class="card-icon">
@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="card-body text-center">
-            <h2 class="card-title">Forms</h2>
+            <h2 class="card-title">Last Week__NS</h2>
           </div>
       </div>
     </a>

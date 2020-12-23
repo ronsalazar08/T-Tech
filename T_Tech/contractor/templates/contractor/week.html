@@ -21,6 +21,7 @@
             #header{
                 background-color: inherit;
                 color: black;
+                font-weight: bold;
             }
         }
         .thead th{
@@ -51,9 +52,9 @@
 
 {% if not is_popup %}
 {% block breadcrumbs %}
-<div class="breadcrumbs dontPrint">
+{% comment %} <div class="breadcrumbs dontPrint">
     <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-</div>
+</div> {% endcomment %}
 {% endblock %}
 {% endif %}
 
