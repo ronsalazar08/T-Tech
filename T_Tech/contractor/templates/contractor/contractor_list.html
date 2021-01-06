@@ -1,6 +1,29 @@
 {% extends 'T_Tech/base_site.html' %}
 
 {% block content %}
+  <style>
+    ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    white;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color:    white;
+      opacity:  1;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color:    white;
+      opacity:  1;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color:    white;
+    }
+    ::-ms-input-placeholder { /* Microsoft Edge */
+      color:    white;
+    }
+
+    ::placeholder { /* Most modern browsers support this now. */
+      color:    white;
+    }
+  </style>
 
   <div class="container-fluid  pb-0">
     <div class="row pb-0 mb-0">
@@ -8,6 +31,10 @@
         <div class="card pb-0 mb-0">
           <div class="card-header card-header-primary">
             <h4 class="card-title w-50">List of Employees</h4>
+            <form method="GET">
+                  <input id="search" name="search" type="text" placeholder="Search.." class="border-bottom text-light w-25" style="border: 0; background: none; position:absolute; top:15px; right:20px;" >
+                  {% comment %} <input type="submit" class="btn btn-white pt-1 pb-1" value="Search" style="position:absolute; top:15px; left:320px;"> {% endcomment %}
+            </form>
             {% comment %} <a class="btn btn-warning p-2" style="position:absolute; top:7px; right:10px;" href="{% url 'contractor_add' %}">
               <i class="material-icons">person_add</i> &nbsp;&nbsp; Add Employee
             </a> {% endcomment %}
@@ -42,10 +69,10 @@
               </table>
               <nav aria-label="Page navigation example">
               <a class="btn btn-primary p-2 float-left" href="{% url 'contractor_add' %}">
-                <i class="material-icons">person_add</i> &nbsp;&nbsp; Add Employee
+                <i class="material-icons">person_add</i> &nbsp;&nbsp; ADD
               </a>
               {% if is_paginated %}
-                <ul class="pagination justify-content-end mr-3">
+                <ul class="pagination justify-content-end">
                   {% if page_obj.has_previous %}
                     <li class="border-top border-bottom page-item border-left rounded-left"><a class="page-link" style="color: #9C27B0;" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
                   {% else %}

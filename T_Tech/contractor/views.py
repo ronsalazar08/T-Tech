@@ -58,11 +58,35 @@ class ContractorEmployeeListView(ListView):
         return context
     def get_queryset(self, **kwargs):
         company_name = self.request.user
+        search = self.request.GET.get('search')
+
         if str(company_name) == 'admin':
             queryset = employee.objects.all().order_by('lastname')
+            if search:
+                queryset = queryset.filter(Q(lastname__contains=search.upper()) | Q(firstname__contains=search.upper()) | Q(id_number__contains=search)).order_by("lastname")
+                messages.success(self.request, f'Displaying "{search.upper()}"')
+                if len(queryset) == 0:
+                    queryset = self.model.objects.all().order_by("lastname")
+                    messages.success(self.request, f'Cannot find "{search.upper()}"')
         else:
             queryset = employee.objects.all().filter(company=str(company_name).upper()).order_by('lastname')
+            if search:
+                queryset = queryset.filter(Q(lastname__contains=search.upper()) | Q(firstname__contains=search.upper()) | Q(id_number__contains=search)).order_by("lastname")
+                messages.success(self.request, f'Displaying "{search.upper()}"')
+                if len(queryset) == 0:
+                    queryset = self.model.objects.all().filter(company=str(company_name).upper()).order_by("lastname")
+                    messages.success(self.request, f'Cannot find "{search.upper()}"')
+
         return queryset
+
+        if search:
+            object_list = object_list.filter(Q(employee__lastname__contains=search.upper()) | Q(employee__firstname__contains=search.upper()) | Q(date_time__contains=search)).order_by("-date_time")
+            messages.success(self.request, f'Displaying "{search.upper()}"')
+            if len(object_list) == 0:
+                object_list = self.model.objects.all().order_by("-date_time")
+                messages.success(self.request, f'Cannot find "{search.upper()}"')
+        
+        return object_list
 
 
 class ContractorEmployeeCreateView(SuccessMessageMixin, CreateView):
@@ -154,6 +178,18 @@ class ContractorLogboxListView(ListView):
                 messages.success(self.request, f'Cannot find "{search.upper()}"')
         
         return object_list
+
+
+class ScheduleView(TemplateView):
+    template_name = "contractor/contractor_schedule.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'title' : 'CONTRACTOR',
+            'lista' : permitted_apps(self.request.user),
+        })
+        return context
 
 #=====================================================================ADMIN PAGE
 

@@ -20,7 +20,12 @@
             }
             #header{
                 background-color: inherit;
-                color: black;
+                padding: 0px !important;
+            }
+            a {
+                font-weight: bold;
+                color: black !important;
+                text-transform: uppercase;
             }
         }
         .thead th{
@@ -51,9 +56,9 @@
 
 {% if not is_popup %}
 {% block breadcrumbs %}
-<div class="breadcrumbs dontPrint">
+{% comment %} <div class="breadcrumbs dontPrint">
     <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-</div>
+</div> {% endcomment %}
 {% endblock %}
 {% endif %}
 
@@ -192,7 +197,7 @@
                 {% for q in query %}
                 <tr>
                     <td >{{ forloop.counter }}</td>
-                    <td style="text-align: left;">{{q.name}}</td>
+                    <td style="text-align: left;">{{q.name}}.</td>
                     <td >{{q.ti1|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to1|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.ti2|date:'g:i A'|default_if_none:""}}</td>
@@ -207,12 +212,33 @@
                     <td >{{q.to6|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.ti7|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to7|date:'g:i A'|default_if_none:""}}</td>
-                    <td >{{ final_listahan|index_day:forloop.counter0|default_if_none:"" }}</td>
-                    <td >{{ final_listahan|index_ot:forloop.counter0|default_if_none:"" }}</td>
-                    <td ></td>
+                    <td >{{ final_listahan|index_day:forloop.counter0|default_if_none:""|floatformat:2 }}</td>
+                    <td >{{ final_listahan|index_ot:forloop.counter0|default_if_none:""|floatformat:1 }}</td>
+                    <td style="padding: 0;">
+                        <select>
+                            <option></option>
+                            <option>+30mins</option>
+                            <option>+1hr</option>
+                            <option>+1.5hrs</option>
+                            <option>+2hrs</option>
+                            <option>+2.5hrs</option>
+                            <option>+3hrs</option>
+                        </select>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    <style>
+        select{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            box-shadow: none !important;
+            background-color: inherit;
+            margin: 0;
+        }
+    </style>
 {% endblock %}

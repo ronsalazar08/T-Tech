@@ -72,10 +72,10 @@
               </table>
               <nav aria-label="Page navigation example">
               <a class="btn btn-info p-2 float-left" href="">
-                <i class="material-icons">note_add</i> &nbsp;&nbsp; Add Transaction
+                <i class="material-icons">note_add</i> &nbsp;&nbsp; ADD
               </a>
               {% if is_paginated %}
-                <ul class="pagination justify-content-end mr-3">
+                <ul class="pagination justify-content-end">
                   {% if page_obj.has_previous %}
                     <li class="border-top border-bottom page-item border-left rounded-left"><a class="page-link text-info" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
                   {% else %}
