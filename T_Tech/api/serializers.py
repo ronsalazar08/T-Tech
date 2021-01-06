@@ -13,4 +13,5 @@ class ContractorLogboxSerializer(serializers.ModelSerializer):
     employee = serializers.StringRelatedField()
     class Meta:
         model = con_logbox
-        fields = ['employee', 'date_time', 'transaction', 'shift']
+        fields = "__all__"
+        # fields = ['employee', 'date_time', 'transaction', 'shift']
