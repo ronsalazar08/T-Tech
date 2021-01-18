@@ -3,6 +3,7 @@
 {% load i18n admin_urls static admin_modify %}
 {% load index_day %}
 {% load index_ot %}
+{% load contractor_late %}
 
 {% block extrahead %}{{ block.super }}
 <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
@@ -200,17 +201,17 @@
                     <td style="text-align: left;">{{q.name}}.</td>
                     <td >{{q.ti1|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to1|date:'g:i A'|default_if_none:""}}</td>
-                    <td >{{q.ti2|date:'g:i A'|default_if_none:""}}</td>
+                    <td style="{% if shift == 'DAY SHIFT' %}{{q.ti2|contractor_late}}{% endif %}">{{q.ti2|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to2|date:'g:i A'|default_if_none:""}}</td>
-                    <td >{{q.ti3|date:'g:i A'|default_if_none:""}}</td>
+                    <td style="{% if shift == 'DAY SHIFT' %}{{q.ti3|contractor_late}}{% endif %}">{{q.ti3|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to3|date:'g:i A'|default_if_none:""}}</td>
-                    <td >{{q.ti4|date:'g:i A'|default_if_none:""}}</td>
+                    <td style="{% if shift == 'DAY SHIFT' %}{{q.ti4|contractor_late}}{% endif %}">{{q.ti4|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to4|date:'g:i A'|default_if_none:""}}</td>
-                    <td >{{q.ti5|date:'g:i A'|default_if_none:""}}</td>
+                    <td style="{% if shift == 'DAY SHIFT' %}{{q.ti5|contractor_late}}{% endif %}">{{q.ti5|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to5|date:'g:i A'|default_if_none:""}}</td>
-                    <td >{{q.ti6|date:'g:i A'|default_if_none:""}}</td>
+                    <td style="{% if shift == 'DAY SHIFT' %}{{q.ti6|contractor_late}}{% endif %}">{{q.ti6|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to6|date:'g:i A'|default_if_none:""}}</td>
-                    <td >{{q.ti7|date:'g:i A'|default_if_none:""}}</td>
+                    <td style="{% if shift == 'DAY SHIFT' %}{{q.ti7|contractor_late}}{% endif %}">{{q.ti7|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{q.to7|date:'g:i A'|default_if_none:""}}</td>
                     <td >{{ final_listahan|index_day:forloop.counter0|default_if_none:""|floatformat:2 }}</td>
                     <td >{{ final_listahan|index_ot:forloop.counter0|default_if_none:""|floatformat:1 }}</td>
