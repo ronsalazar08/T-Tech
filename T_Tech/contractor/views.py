@@ -343,6 +343,8 @@ def ot_and_day(timeIn, timeOut, shift):
         seven_am = timeIn.replace(hour=7, minute=0, second=0, microsecond=0)
         four_pm = timeOut.replace(hour=16, minute=0, second=0, microsecond=0)
         eleven_am = timeOut.replace(hour=11, minute=0, second=0, microsecond=0)
+        twelve_noon = timeOut.replace(hour=12, minute=0, second=0, microsecond=0)
+        one_pm = timeOut.replace(hour=13, minute=0, second=0, microsecond=0)
         rounded_timeIn = ceil_dt(timeIn)
         rounded_timeOut = floor_dt(timeOut)
 
@@ -371,6 +373,8 @@ def ot_and_day(timeIn, timeOut, shift):
             if ot_per_day > 3.5:
                 ot_per_day = 3.5
         else:
+            if rounded_timeOut < one_pm and rounded_timeOut >= twelve_noon:
+                rounded_timeOut = twelve_noon
             difference = rounded_timeOut - rounded_timeIn
             day_seconds = difference.total_seconds()
             day_hours = int(day_seconds // 3600)
@@ -379,7 +383,10 @@ def ot_and_day(timeIn, timeOut, shift):
                 day_minutes = 5
             else:
                 day_minutes = 0
-            hour_per_day = round((float(f'{day_hours}.{day_minutes}') - 1)/8, 2)
+            if rounded_timeOut < one_pm:
+                hour_per_day = round((float(f'{day_hours}.{day_minutes}'))/8, 2)
+            else:
+                hour_per_day = round((float(f'{day_hours}.{day_minutes}') - 1)/8, 2)
             ot_per_day = 0
     else:
         seven_pm = timeIn.replace(hour=19, minute=0, second=0, microsecond=0)
